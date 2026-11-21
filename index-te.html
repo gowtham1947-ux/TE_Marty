@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>TotalEnergies · MARTY S/4HANA Core Model · Wipro &amp; KaarTech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* KaarTech palette: red #E31E24 confirmed from KaarTech marks; neutrals are placeholders until the official branding sheet is supplied */
+:root{--kt:#e31e24;--r:16px;--ease:cubic-bezier(.2,.7,.2,1);--font:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;--hdr:64px}
+[data-theme="dark"]{--bg:#0d0e10;--panel:#16181b;--panel2:#1d2024;--line:#2a2e33;--line2:#40464d;--text:#f3f2ef;--muted:#b0b3b8;--faint:#868a90;--acc:#ff4d52;--accf:#e31e24;--acc-soft:rgba(227,30,36,.14);--ink-on:#fff;--glass:rgba(13,14,16,.82);--shadow:0 20px 50px rgba(0,0,0,.45);--opt:#9aa3ad;--logo:invert(1)}
+[data-theme="light"]{--bg:#f6f5f2;--panel:#ffffff;--panel2:#efede9;--line:#e0ddd7;--line2:#c4c0b8;--text:#141518;--muted:#4f5359;--faint:#6d7177;--acc:#c4141a;--accf:#e31e24;--acc-soft:rgba(227,30,36,.08);--ink-on:#fff;--glass:rgba(246,245,242,.86);--shadow:0 10px 30px rgba(20,21,24,.08);--opt:#6d7680;--logo:none}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:15.5px;line-height:1.5;overflow-x:hidden}
+body{transition:background .4s,color .4s}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:6px}
+h1,h2,h3,h4{margin:0;letter-spacing:-.02em;line-height:1.12}
+p{margin:0}
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none;transition:opacity .8s var(--ease)}
+body:not([data-view="home"]) #bg{opacity:.16}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);font-weight:500}
+.mono{font-family:var(--mono)}
+.muted{color:var(--muted)}
+.illus{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);border:1px solid var(--line);border-radius:999px;padding:2px 8px;white-space:nowrap}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:12px 22px;font-weight:600;font-size:14.5px;transition:transform .2s var(--ease),background .2s,border-color .2s}
+.btn.pri{background:var(--accf);color:#fff}
+.btn.pri:hover{transform:translateY(-2px)}
+.btn.sec{border:1px solid var(--line2);background:var(--glass)}
+.btn.sec:hover{border-color:var(--acc)}
+.chip{border:1px solid var(--line2);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;color:var(--muted);transition:all .2s}
+.chip[aria-pressed="true"],.chip.on{background:var(--accf);border-color:var(--accf);color:#fff}
+.chip:hover{border-color:var(--acc)}
+
+/* header */
+header{position:fixed;top:0;left:0;right:0;height:var(--hdr);z-index:50;display:flex;align-items:center;gap:18px;padding:0 24px;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;white-space:nowrap}
+.brand img{height:22px;filter:var(--logo)}
+.brand .x{color:var(--faint);font-size:13px}
+.brand .te{font-weight:700;font-size:15px;letter-spacing:-.01em}
+nav.tabs{display:flex;gap:2px;margin-left:auto}
+nav.tabs button{padding:8px 12px;border-radius:999px;font-size:13px;font-weight:600;color:var(--muted);position:relative}
+nav.tabs button:hover{color:var(--text)}
+nav.tabs button[aria-current="page"]{color:var(--text);background:var(--acc-soft)}
+nav.tabs button[aria-current="page"]::after{content:"";position:absolute;left:14px;right:14px;bottom:3px;height:2px;border-radius:2px;background:var(--accf)}
+.hbtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:15px;flex:none}
+.hbtn:hover{border-color:var(--acc)}
+#bMenu{display:none}
+#mnav{position:fixed;top:var(--hdr);right:12px;z-index:60;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:8px;display:none;flex-direction:column;min-width:220px}
+#mnav.open{display:flex}
+#mnav button{text-align:left;padding:10px 14px;border-radius:10px;font-weight:600}
+#mnav button[aria-current="page"]{background:var(--acc-soft);color:var(--acc)}
+@media (max-width:1080px){nav.tabs{display:none}#bMenu{display:grid;margin-left:auto}}
+@media (max-width:980px){body[data-view="home"] #bg{opacity:.22}}
+@media (max-width:560px){.brand .x,#bFs,#bKeys{display:none}header{gap:10px;padding:0 14px}.fnav{bottom:12px;right:12px}}
+
+/* views */
+main{position:relative;z-index:1}
+.view{min-height:100vh;padding:calc(var(--hdr) + 36px) 0 90px;display:none}
+.view.act{display:block;animation:vin .6s var(--ease)}
+@keyframes vin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.wrap{max-width:1320px;margin:0 auto;padding:0 32px}
+@media (max-width:560px){.wrap{padding:0 16px}.view{padding-top:calc(var(--hdr) + 22px)}}
+.vh{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:26px}
+.vh h2{font-size:clamp(26px,3.2vw,40px);font-weight:800;margin-top:8px}
+.vh p{max-width:640px;color:var(--muted);margin-top:10px}
+.src{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:18px;letter-spacing:.04em}
+.confirm{margin-top:22px;border:1px dashed var(--line2);border-radius:14px;padding:14px 18px;font-size:13.5px;color:var(--muted)}
+.confirm b{color:var(--text);font-weight:700}
+.confirm ul{margin:6px 0 0;padding-left:18px}
+
+/* home */
+.hero{min-height:calc(100vh - var(--hdr) - 130px);display:flex;flex-direction:column;justify-content:center;max-width:600px}
+.hero h1{font-size:clamp(34px,4.6vw,62px);font-weight:800;margin:14px 0 18px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero .lede{font-size:17px;color:var(--muted);max-width:540px}
+.hero .ctas{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.hint{margin-top:16px;font-size:12px;color:var(--faint);font-family:var(--mono)}
+.legend{position:absolute;right:32px;bottom:26px;font-family:var(--mono);font-size:11px;color:var(--faint);text-align:right;max-width:46vw}
+.legend b{color:var(--acc);font-weight:500}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:8px}
+.kpi{background:var(--glass);backdrop-filter:blur(8px);padding:18px 20px}
+.kpi b{display:block;font-size:30px;font-weight:800;letter-spacing:-.03em}
+.kpi span{font-size:12.5px;color:var(--muted)}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.legend{display:none}}
+.about{margin-top:40px;display:grid;grid-template-columns:1.1fr 2fr;gap:22px;align-items:stretch}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+.stat b{font-size:26px;font-weight:800;color:var(--acc);letter-spacing:-.02em}
+.stat span{display:block;font-size:12.5px;color:var(--muted)}
+@media (max-width:900px){.about{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+
+/* scope */
+.scopebar{display:flex;gap:8px;flex-wrap:wrap}
+.scopes{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}
+.scope{position:relative;transition:opacity .5s,transform .5s var(--ease),filter .5s}
+.scope.off{opacity:.28;filter:grayscale(1);transform:scale(.985)}
+.scope.opt{border-style:dashed;border-color:var(--line2)}
+.scope h3{font-size:24px;font-weight:800;margin:6px 0 4px}
+.tag{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:var(--acc-soft);color:var(--acc)}
+.tag.g{background:var(--panel2);color:var(--muted)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.fact{background:var(--panel2);border-radius:12px;padding:12px}
+.fact b{font-size:24px;font-weight:800;letter-spacing:-.02em;display:block}
+.fact span{font-size:12px;color:var(--muted)}
+.users{height:10px;border-radius:6px;background:var(--panel2);overflow:hidden;margin:6px 0 2px}
+.users i{display:block;height:100%;background:var(--accf);border-radius:6px;width:0;transition:width 1.2s var(--ease)}
+.scope.opt .users i{background:var(--opt)}
+.ents{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0 4px}
+.ents i{width:18px;height:18px;border-radius:5px;background:var(--accf);opacity:0;transform:scale(.4);transition:all .4s var(--ease)}
+.scope.opt .ents i{background:var(--opt)}
+.scope.shown .ents i{opacity:1;transform:none}
+.scope ul{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:14px}
+.scope ul li{margin:4px 0}
+.oos{margin-top:22px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13.5px}
+.oos .x{border:1px solid var(--line2);border-radius:999px;padding:6px 14px;color:var(--muted);text-decoration:line-through;text-decoration-color:var(--acc)}
+.twosys{margin-top:22px;display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center}
+.twosys .card{padding:16px 18px}
+.twosys h4{font-size:17px;font-weight:800}
+.twosys .link{font-family:var(--mono);font-size:11px;color:var(--acc);text-align:center}
+.twosys .link svg{display:block;margin:0 auto}
+@media (max-width:900px){.scopes{grid-template-columns:1fr}.twosys{grid-template-columns:1fr}.facts{grid-template-columns:repeat(3,1fr)}}
+
+/* landscape */
+.land{display:grid;grid-template-columns:1fr 340px;gap:22px}
+.svgbox{padding:10px}
+.svgbox svg{width:100%;height:auto;display:block}
+.nar{display:flex;flex-direction:column}
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.steps button{font-family:var(--mono);font-size:11.5px;border:1px solid var(--line2);border-radius:999px;padding:5px 11px;color:var(--muted)}
+.steps button.on{background:var(--accf);border-color:var(--accf);color:#fff}
+.nar h3{font-size:22px;font-weight:800;margin:6px 0 10px}
+.nar .tw{color:var(--muted);min-height:110px}
+.nar .ctl{display:flex;gap:8px;margin-top:auto;padding-top:16px}
+.disp{display:none;margin-top:12px;gap:6px;flex-wrap:wrap}
+.disp.show{display:flex}
+.disp button{border:1px solid var(--line2);border-radius:10px;padding:6px 10px;font-size:12.5px;font-weight:600}
+.disp button.on{border-color:var(--acc);color:var(--acc)}
+.dispd{font-size:13px;color:var(--muted);margin-top:8px;min-height:40px}
+@media (max-width:1000px){.land{grid-template-columns:1fr}}
+/* svg diagram styles */
+.dg text{font-family:var(--font);fill:var(--text)}
+.dg .t-s{font-size:11px;fill:var(--muted)}
+.dg .t-m{font-family:var(--mono);font-size:10px;fill:var(--faint);letter-spacing:.08em}
+.dg .t-h{font-size:17px;font-weight:800}
+.dg .t-b{font-size:13px;font-weight:700}
+.dg .box{fill:var(--panel2);stroke:var(--line);stroke-width:1}
+.dg .pill{fill:var(--panel);stroke:var(--line2);stroke-width:1;transition:all .4s}
+.dg .zone{transition:opacity .5s}
+.dg.focus .zone{opacity:.32}
+.dg.focus .zone.hl{opacity:1}
+.dg .zone.hl .pill{stroke:var(--acc);stroke-width:1.6}
+.dg .dash{stroke-dasharray:5 5}
+.dg .edge{fill:none;stroke:var(--line2);stroke-width:2;transition:stroke .4s,opacity .4s}
+.dg .edge.live{stroke:var(--acc);stroke-dasharray:4 9;animation:flow 1s linear infinite}
+.dg .edge.live.rev{animation-direction:reverse}
+.dg.focus .edge:not(.live){opacity:.3}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.dg .big{font-size:34px;font-weight:800;fill:var(--acc)}
+
+/* approach */
+.appr{display:grid;grid-template-columns:1.1fr 1fr;gap:22px}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.rule{text-align:left;border:1px solid var(--line);background:var(--panel2);border-radius:12px;padding:12px;font-size:13px;color:var(--muted);transition:all .25s}
+.rule b{display:block;color:var(--text);font-size:13.5px;margin-bottom:3px}
+.rule.on{border-color:var(--acc);background:var(--acc-soft)}
+.flowlist{list-style:none;margin:0;padding:0;counter-reset:s}
+.flowlist li{border-bottom:1px solid var(--line)}
+.flowlist button{width:100%;text-align:left;display:grid;grid-template-columns:44px 1fr 20px;align-items:center;padding:14px 4px;font-weight:700;font-size:15px}
+.flowlist .n{font-family:var(--mono);color:var(--acc);font-size:13px}
+.flowlist .pl{color:var(--faint);transition:transform .3s}
+.flowlist li.open .pl{transform:rotate(45deg)}
+.flowlist .bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease)}
+.flowlist li.open .bd{grid-template-rows:1fr}
+.flowlist .bd>div{overflow:hidden;padding-left:48px;color:var(--muted);font-size:14px}
+.flowlist li.open .bd>div{padding-bottom:14px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+@media (max-width:1000px){.appr{grid-template-columns:1fr}.rules{grid-template-columns:1fr}}
+
+/* roles */
+.rolehead{display:grid;grid-template-columns:150px 1fr 1fr;gap:14px;margin-bottom:10px}
+.rolehead .card{padding:14px 18px}
+.rolehead h4{font-size:17px;font-weight:800}
+.rolehead .kt{border-color:var(--accf)}
+.rrow{display:grid;grid-template-columns:150px 1fr 1fr;gap:14px;align-items:stretch;transition:opacity .35s}
+.rrow+.rrow{margin-top:8px}
+.rrow .area{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center}
+.rrow .c{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:14px;position:relative;transition:all .3s}
+.rrow .c.k{border-left:3px solid var(--accf)}
+.rrow:hover .c{border-color:var(--acc)}
+.rrow:hover .c.w::after{content:"";position:absolute;right:-15px;top:50%;width:16px;height:2px;background:var(--acc)}
+.rrow.dim{opacity:.22}
+.rolef{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+@media (max-width:820px){.rolehead,.rrow{grid-template-columns:1fr 1fr}.rolehead>div:first-child,.rrow .area{grid-column:1/-1}.rolehead>div:first-child{display:none}}
+
+/* plan */
+.ptabs{display:flex;gap:6px}
+.gwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+.gantt{min-width:980px;position:relative;padding:0}
+.grow{display:grid;grid-template-columns:150px 1fr;border-bottom:1px solid var(--line);min-height:46px}
+.grow .lab{padding:8px 14px;font-weight:700;font-size:13.5px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--line)}
+.grow .lab small{display:block;font-weight:500;color:var(--faint);font-size:11px}
+.grow .lane{position:relative}
+.ghead .lane{display:grid;grid-template-columns:repeat(20,1fr)}
+.ghead .lane span{font-family:var(--mono);font-size:10.5px;color:var(--faint);text-align:center;padding:12px 0 8px;border-left:1px solid var(--line)}
+.ghead .lane span.y{color:var(--acc)}
+.cols{position:absolute;inset:0;display:grid;grid-template-columns:repeat(20,1fr);pointer-events:none}
+.cols i{border-left:1px solid var(--line);opacity:.6}
+.bar{position:absolute;top:8px;bottom:8px;border-radius:8px;font-size:12px;font-weight:700;display:block;line-height:28px;text-align:left;padding:0 9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--panel2);border:1px solid var(--line2);color:var(--text);transition:all .35s var(--ease);cursor:pointer;z-index:2}
+.bar:hover,.bar.sel{border-color:var(--acc);transform:translateY(-1px);box-shadow:0 6px 18px rgba(227,30,36,.25)}
+.bar.sel{background:var(--accf);color:#fff}
+.bar.k-prep{background:var(--text);color:var(--bg);border-color:var(--text)}
+.bar.k-exp{background:var(--accf);color:#fff;border-color:var(--accf)}
+.bar.k-real{background:color-mix(in srgb,var(--accf) 40%,var(--panel));border-color:var(--accf)}
+.bar.k-test{background:var(--panel2);border-color:var(--text)}
+.bar.k-dep{background:var(--accf);color:#fff}
+.bar.k-hyp{background:color-mix(in srgb,var(--opt) 35%,var(--panel))}
+.blab{position:absolute;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;white-space:nowrap;color:var(--text);pointer-events:none}
+.gantt.playing .bar{opacity:.18}
+.gantt.playing .bar.lit{opacity:1}
+.gantt.playing .bar.now{box-shadow:0 0 0 2px var(--acc),0 0 26px rgba(227,30,36,.45)}
+.env{position:absolute;height:14px;border-radius:7px;background:var(--acc-soft);border:1px solid var(--acc);font-family:var(--mono);font-size:9.5px;color:var(--acc);display:flex;align-items:center;padding:0 6px;white-space:nowrap;cursor:help}
+.env.pt{width:14px;padding:0;justify-content:center;transform:translateX(-7px) rotate(45deg);border-radius:3px}
+.envrow .lane{height:142px}
+.envlab{position:absolute;font-family:var(--mono);font-size:10px;color:var(--muted)}
+.ms{position:absolute;top:-6px;bottom:-6px;width:2px;background:var(--acc);z-index:3;pointer-events:none}
+.ms b{position:absolute;top:50%;left:8px;transform:translateY(-50%);white-space:nowrap;font-family:var(--mono);font-size:10px;color:var(--acc);background:var(--bg);padding:2px 6px;border-radius:6px;border:1px solid var(--acc)}
+.playhead{position:absolute;top:0;bottom:0;width:2px;background:var(--acc);z-index:5;opacity:0;pointer-events:none;box-shadow:0 0 18px var(--acc)}
+.gantt.playing .playhead{opacity:1}
+.pbar{display:flex;align-items:center;gap:14px;margin:16px 0;flex-wrap:wrap}
+.cap{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.cap b{color:var(--acc)}
+#gGolive{pointer-events:none}
+.drawer{position:fixed;top:var(--hdr);right:0;bottom:0;width:min(440px,100vw);background:var(--panel);border-left:1px solid var(--line);box-shadow:var(--shadow);z-index:70;transform:translateX(105%);transition:transform .45s var(--ease);overflow:auto;padding:26px}
+.drawer.open{transform:none}
+.drawer h3{font-size:24px;font-weight:800;margin:8px 0 4px}
+.drawer h5{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:20px 0 6px;font-weight:500}
+.drawer ul{margin:0;padding-left:18px;color:var(--muted);font-size:14px}
+.drawer li{margin:4px 0}
+.drawer .when{font-family:var(--mono);font-size:12.5px;color:var(--acc)}
+.drawer .dnav{display:flex;justify-content:space-between;margin-top:26px;gap:8px}
+.drawer .x{position:absolute;top:16px;right:16px}
+.sheet{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;min-width:820px}
+.sheet th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:500;padding:10px 14px;border-bottom:1px solid var(--line2);position:sticky;top:0;background:var(--panel)}
+.sheet td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--muted)}
+.sheet td:first-child{font-weight:700;color:var(--text);white-space:nowrap}
+.sheet tr{transition:background .2s;cursor:pointer}
+.sheet tbody tr:hover{background:var(--acc-soft)}
+.sheet tr.hid{display:none}
+.sheet .envs span{display:inline-block;font-family:var(--mono);font-size:10.5px;border:1px solid var(--acc);color:var(--acc);border-radius:6px;padding:1px 6px;margin:0 4px 4px 0}
+.sheet ul{margin:0;padding-left:16px}
+
+/* next */
+.nsteps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.nstep .num{font-family:var(--mono);color:var(--acc);font-size:13px}
+.nstep h3{font-size:19px;font-weight:800;margin:10px 0 8px}
+.nstep p{color:var(--muted);font-size:14px}
+.why{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.why ul{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:14px}
+.thanks{margin-top:46px;text-align:center}
+.thanks h2{font-size:clamp(30px,4vw,48px);font-weight:800}
+@media (max-width:900px){.nsteps,.why{grid-template-columns:1fr}}
+
+/* footer nav */
+.fnav{position:fixed;bottom:18px;right:22px;z-index:40;display:flex;gap:8px}
+.fnav .hbtn{background:var(--glass);backdrop-filter:blur(10px)}
+.prog{position:fixed;left:0;bottom:0;height:3px;background:var(--accf);z-index:41;transition:width .5s var(--ease)}
+#keys{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.5);display:none;place-items:center}
+#keys.open{display:grid}
+#keys .card{width:min(420px,92vw)}
+#keys dl{display:grid;grid-template-columns:90px 1fr;gap:8px 14px;font-size:14px;margin:14px 0 0}
+#keys dt{font-family:var(--mono);color:var(--acc)}
+
+/* transition flow */
+.tm{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.tflow{display:flex;flex-direction:column}
+.tflow>*{transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.tflow.pre>*{opacity:0;transform:translateY(10px)}
+.ts{display:block;width:100%;text-align:left;border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--panel2);transition:border-color .3s,box-shadow .3s}
+.ts:hover{border-color:var(--line2)}
+.ts.on{border-color:var(--acc);box-shadow:0 0 0 4px var(--acc-soft)}
+.sys4{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.sys{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.sys b{display:block;font-size:15px}.sys span{font-size:12px;color:var(--muted)}
+.tp{display:block;font-size:13.5px;color:var(--muted);margin-top:6px}
+.tl{display:flex;flex-direction:column;gap:4px;margin-top:10px;font-size:14px}
+.tl>span::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accf);margin-right:9px;vertical-align:1px}
+.tl>span.o{color:var(--muted)}.tl>span.o::before{background:transparent;border:1.5px dashed var(--opt)}
+.tgt{background:color-mix(in srgb,var(--accf) 7%,var(--panel2))}
+.tcon{display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px 0;text-align:center}
+.tcon i{width:2px;height:18px;background:linear-gradient(var(--acc) 50%,transparent 50%);background-size:2px 8px;animation:drip .6s linear infinite}
+@keyframes drip{to{background-position:0 8px}}
+.tcon small{font-size:12px;color:var(--muted)}
+.tchip{border:1px solid var(--acc);color:var(--acc);background:var(--acc-soft);border-radius:999px;padding:5px 14px;font-size:12.5px;font-weight:700;transition:all .3s}
+.tchip.on{background:var(--accf);color:#fff}
+.int{flex-direction:row;justify-content:center;gap:10px}
+.int .arrows{font-size:22px;color:var(--acc);animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-3px)}}
+.rules.one{grid-template-columns:1fr}
+/* commercials */
+.gmctl{display:grid;grid-template-columns:auto 170px;gap:8px 14px;align-items:center;padding:16px 18px;min-width:330px}
+.gmctl label{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;justify-content:space-between}
+.gmv{font-family:var(--mono);color:var(--acc);display:inline-flex;align-items:center}
+.gmv input,.gmin{width:64px;background:var(--panel2);border:1px solid var(--acc);border-radius:8px;color:var(--text);font:600 13px var(--mono);padding:4px 6px;text-align:right}
+.gmctl input[type=range]{accent-color:var(--accf);width:100%}
+.gmctl .chip{grid-column:1/-1;justify-self:start}
+.ckpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.ck{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.ck .tm{margin-bottom:6px}
+.ck b{font-size:24px;font-weight:800;letter-spacing:-.02em;display:block}
+.ck .dl{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.ck .dl.up{color:#2f9e5b}.ck .dl.dn{color:var(--acc)}
+.ck.hl{border-color:var(--accf)}
+.ctbl{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;min-width:980px}
+.ctbl th{background:var(--accf);color:#fff;font-weight:700;font-size:12px;padding:10px;text-align:center;border-right:1px solid rgba(255,255,255,.2)}
+.ctbl th.vp{background:#3d5a80}
+.ctbl caption{caption-side:top;text-align:left;font-weight:800;font-size:15px;padding:0 0 10px}
+.ctbl td{padding:9px 10px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;background:var(--panel)}
+.ctbl td.l{text-align:left}.ctbl td.c{text-align:center}
+.ctbl td.na{text-align:center;color:var(--faint)}
+.ctbl tr.sub td{background:var(--panel2);font-weight:800}
+.ctbl td.ed{background:var(--acc-soft)}
+.ctbl td.dr{color:var(--acc);font-weight:700}
+.ctbl td.fl,.ck b.fl{animation:fl .7s}
+@keyframes fl{0%{background:rgba(227,30,36,.35)}100%{background:transparent}}
+.splitbar{display:flex;height:30px;border-radius:8px;overflow:hidden;margin:14px 0 4px;font-size:12px;font-weight:700}
+.splitbar div{display:flex;align-items:center;padding:0 10px;white-space:nowrap}
+.splitbar .k{background:var(--accf);color:#fff}.splitbar .w{background:var(--panel2);color:var(--muted)}
+.cgrid{display:grid;grid-template-columns:1fr;gap:16px}
+.bufn{margin-top:22px}
+.bufg{display:grid;grid-template-columns:1.1fr .8fr 1.3fr;gap:22px;margin-top:12px;align-items:start}
+.hrs>div{margin-bottom:10px}
+.hrs b{font-size:18px;font-weight:800;margin-right:8px}.hrs span{font-size:12.5px;color:var(--muted)}
+.hrs i{display:block;height:8px;border-radius:5px;background:var(--line2);margin-top:5px}.hrs i.u{background:var(--accf)}
+.bufk{display:grid;gap:10px}.bufk b{font-size:26px;font-weight:800;color:var(--acc);display:block}.bufk span{font-size:12.5px;color:var(--muted)}
+@media (max-width:1000px){.ckpis{grid-template-columns:repeat(2,1fr)}.bufg{grid-template-columns:1fr}.gmctl{min-width:0;width:100%}}
+/* decision */
+.dpts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.dpt{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;position:relative;overflow:hidden}
+.dpt .n{font-family:var(--mono);font-size:12px;color:var(--acc)}
+.dpt h4{font-size:16px;font-weight:800;margin:10px 0 6px}
+.dpt p{font-size:13.5px;color:var(--muted)}
+.dpt::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--accf);transition:width .8s var(--ease)}
+.dpts.in .dpt::after{width:100%}
+.prot{margin-top:16px}.prot ul{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:14px}.prot li{margin:4px 0}
+.askh{font-size:22px;font-weight:800;margin:30px 0 12px}
+.ask{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 18px;transition:border-color .3s,background .3s}
+.ask+.ask{margin-top:10px}
+.ask .n{font-family:var(--mono);color:var(--acc);font-size:13px}
+.ask h4{font-size:16px;font-weight:800}.ask p{font-size:13.5px;color:var(--muted);margin-top:3px}
+.ask p b{color:var(--text)}
+.ask .bt{display:flex;gap:6px}
+.ask .bt button{border:1px solid var(--line2);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:700}
+.ask.ok{border-color:#2f9e5b;background:color-mix(in srgb,#2f9e5b 8%,var(--panel))}
+.ask.ok .bt .y{background:#2f9e5b;border-color:#2f9e5b;color:#fff}
+.ask.dis{border-color:#d08a1d}.ask.dis .bt .q{background:#d08a1d;border-color:#d08a1d;color:#fff}
+.asum{margin-top:16px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.asum b{color:var(--text)}
+@media (max-width:1000px){.dpts{grid-template-columns:1fr 1fr}.ask{grid-template-columns:1fr}.ask .n{display:none}}
+@media (max-width:560px){.dpts{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body data-view="home">
+<canvas id="bg" aria-hidden="true"></canvas>
+
+<header>
+  <div class="brand">
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjQgMzEiPjxwYXRoIGZpbGw9IiMxMTEiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTIuNzUsMTguOTJDMi40OCwxOC44NyAyLjMwLDE4LjcwIDIuMTksMTguNDJDMi4xMCwxOC4xOSAyLjQzLDE2LjQ0IDIuNzAsMTUuNzVDMi43NiwxNS41OCAyLjkwLDE0Ljg0IDMuMDEsMTQuMTBDMy4xMSwxMy4zNiAzLjM1LDEyLjIzIDMuNTQsMTEuNjBDMy43MywxMC45NyAzLjkzLDEwLjAyIDMuOTksOS41MEM0LjA1LDguOTggNC4yMSw4LjIyIDQuMzQsNy44MkM0LjQ4LDcuNDIgNC42OCw2LjUyIDQuODAsNS44MkM1LjE0LDMuNzggNS4zOSwyLjY3IDUuNTksMi40MEM1LjkxLDEuOTYgNi4zNiwxLjg5IDguNTYsMS45MkMxMC45MCwxLjk1IDExLjAwLDEuOTkgMTEuMDAsMi43NUMxMS4wMCwzLjMzIDEwLjY1LDQuOTkgMTAuMzQsNS44OUMxMC4wMiw2LjgyIDkuOTAsOC4zNCAxMC4xMiw4LjY0QzEwLjMzLDguOTAgMTAuNTgsOC43NCAxMS4xNyw3Ljk3QzExLjc5LDcuMTYgMTYuMzQsMi40MSAxNi43NCwyLjE1QzE3LjAyLDEuOTcgMTcuMjUsMS45NSAxOS42NCwxLjkyQzIyLjM3LDEuODkgMjIuNzMsMS45MyAyMi44NiwyLjMyQzIyLjk0LDIuNTkgMjIuNzcsMi44OSAyMi4zMywzLjIyQzIxLjc0LDMuNjggMTYuMDcsOS4zMCAxNS43Miw5Ljc4QzE1LjI1LDEwLjQ0IDE1LjI4LDEwLjc1IDE1Ljk1LDExLjg1QzE2LjI2LDEyLjM0IDE2Ljc5LDEzLjEzIDE3LjE1LDEzLjYwQzE3LjUwLDE0LjA3IDE3Ljg3LDE0LjU4IDE3Ljk2LDE0Ljc1QzE4LjA1LDE0LjkyIDE4LjU4LDE1LjY3IDE5LjEyLDE2LjQzQzE5LjY3LDE3LjE5IDIwLjE1LDE3LjkzIDIwLjE5LDE4LjA4QzIwLjMwLDE4LjQ0IDIwLjE3LDE4Ljc2IDE5Ljg4LDE4Ljg2QzE5LjcwLDE4LjkyIDE3LjI2LDE4Ljk0IDE0Ljg3LDE4LjkwQzE0LjUwLDE4LjkwIDE0LjExLDE4LjQ4IDEzLjQ1LDE3LjQxQzEzLjE4LDE2Ljk2IDEyLjc2LDE2LjMxIDEyLjU0LDE1Ljk2QzEyLjMxLDE1LjYyIDEyLjAzLDE1LjEzIDExLjkxLDE0Ljg5QzExLjgwLDE0LjY1IDExLjU2LDE0LjI0IDExLjM4LDEzLjk4QzEwLjgyLDEzLjE5IDEwLjE2LDExLjkxIDkuOTAsMTEuMTJDOS40OSw5Ljg4IDkuMjksMTAuMDcgOS4wNSwxMS45MEM4Ljk3LDEyLjQ4IDguNzIsMTMuNzIgOC41MCwxNC42NUM4LjI3LDE1LjU5IDguMDQsMTYuNzEgNy45OCwxNy4xNUM3Ljc2LDE4Ljg0IDcuNjMsMTguOTIgNC45MCwxOC45NEMzLjgzLDE4Ljk1IDIuODYsMTguOTQgMi43NSwxOC45MlpNMjcuNDUsMTguOTBDMjMuMzUsMTguODUgMjMuMzUsMTguODUgMjMuMDAsMTguNjFDMjIuMjcsMTguMTEgMjEuOTAsMTcuNjcgMjEuNTksMTYuOTFDMjEuMTksMTUuOTUgMjEuMjIsMTUuMjEgMjEuNzQsMTMuNDZDMjIuMDYsMTIuMzcgMjIuMTMsMTIuMjMgMjIuNTcsMTEuNzdDMjMuNDUsMTAuODYgMjMuNDcsMTAuODYgMjcuMjUsMTAuODJDMzAuODgsMTAuNzggMzEuMDAsMTAuNzYgMzEuMDAsMTAuMjFDMzEuMDAsMTAuMDEgMzAuOTEsOS44NCAzMC42OSw5LjY2QzMwLjM4LDkuNDAgMzAuMzgsOS40MCAyNy41MSw5LjQwQzI0LjU0LDkuNDAgMjQuMDksOS4zNSAyMy45MCw5LjAwQzIzLjY1LDguNTQgMjMuOTcsNi42OSAyNC4zNiw2LjMwQzI0LjYwLDYuMDUgMjQuNjAsNi4wNSAyOS4yMyw2LjA1QzMzLjgxLDYuMDUgMzMuODUsNi4wNSAzNC4zMCw2LjI3QzM0Ljk2LDYuNjAgMzUuODYsNy40NCAzNi4wMCw3Ljg2QzM2LjM0LDguODkgMzYuMjksMTAuNDYgMzUuODUsMTIuMjVDMzUuNzIsMTIuODAgMzUuNTYsMTMuNDcgMzUuNTEsMTMuNzVDMzUuNDYsMTQuMDMgMzUuMzMsMTQuNjEgMzUuMjEsMTUuMDRDMzUuMDksMTUuNDggMzUuMDAsMTUuOTMgMzUuMDAsMTYuMDVDMzUuMDAsMTcuMzQgMzMuNDgsMTguODIgMzIuMDUsMTguOTJDMzEuNzcsMTguOTMgMjkuNzEsMTguOTMgMjcuNDUsMTguOTBaTTM5LjIzLDE4Ljg5QzM4LjA0LDE4LjgwIDM3LjEyLDE4LjA3IDM2Ljc4LDE2Ljk2QzM2LjQ5LDE2LjAyIDM2LjUxLDE1LjIyIDM2Ljg0LDEzLjc1QzM3LjE1LDEyLjQyIDM3LjMwLDEyLjExIDM3Ljk0LDExLjUyQzM4LjYxLDEwLjkwIDM4Ljc3LDEwLjg4IDQyLjQ1LDEwLjgzQzQ1LjEwLDEwLjc5IDQ1Ljc5LDEwLjc2IDQ1Ljk4LDEwLjY0QzQ2LjM3LDEwLjM5IDQ2LjIyLDkuODIgNDUuNzAsOS41NUM0NS40Niw5LjQzIDQ0LjkwLDkuNDAgNDIuNTMsOS40MEMzOS40MCw5LjQwIDM5LjI2LDkuMzggMzkuMDEsOC44NUMzOC44Myw4LjQ4IDM5LjAxLDcuMDMgMzkuMjksNi41NUMzOS42MCw2LjAwIDM5LjgwLDUuOTkgNDQuNjUsNi4wMkM0OS41OCw2LjA1IDQ5LjIzLDYuMDAgNTAuMzAsNi44M0M1MC45NSw3LjM0IDUxLjMwLDguMDcgNTEuMzgsOS4xMEM1MS40Myw5LjgyIDUxLjE0LDExLjgxIDUwLjc1LDEzLjQ1QzUwLjYyLDE0LjAwIDUwLjM3LDE1LjAyIDUwLjIxLDE1LjczQzQ5LjgyLDE3LjM3IDQ5LjcwLDE3LjYwIDQ4Ljk2LDE4LjE2QzQ3Ljk1LDE4LjkzIDQ4LjE0LDE4LjkwIDQzLjgyLDE4LjkzQzQxLjY5LDE4Ljk0IDM5LjYzLDE4LjkyIDM5LjIzLDE4Ljg5Wk01Mi4yNSwxOC45MEM1MS4zMiwxOC43NiA1MS4xOSwxOC40NiA1MS41NSwxNy4zM0M1MS42OCwxNi45MCA1MS44NiwxNi4wNCA1MS45NSwxNS40M0M1Mi4wNCwxNC44MiA1Mi4xOSwxNC4wNiA1Mi4zMCwxMy43NEM1Mi40MSwxMy40MyA1Mi42NCwxMi40NSA1Mi44MSwxMS41NkM1My4xNyw5LjcwIDUzLjYyLDguNjkgNTQuNTcsNy42OUM1NS4zMiw2LjkwIDU2LjcyLDYuMjQgNTcuOTAsNi4xMEM1OC44NCw1Ljk5IDYyLjUwLDUuOTYgNjIuOTksNi4wNkM2My4zNiw2LjE0IDYzLjM4LDYuMjYgNjMuMTQsNy42MkM2Mi44Nyw5LjE3IDYyLjc1LDkuMzAgNjEuMzAsOS40MUM2MC4yOCw5LjQ5IDU5LjUyLDkuNzIgNTguNzksMTAuMTlDNTguMTIsMTAuNjEgNTcuMzgsMTIuMjcgNTcuMTQsMTMuODVDNTYuOTUsMTUuMTcgNTYuMzYsMTcuNjkgNTYuMTEsMTguMjVDNTUuODEsMTguOTIgNTUuNzQsMTguOTUgNTQuMTEsMTguOTZDNTMuMzEsMTguOTYgNTIuNDcsMTguOTMgNTIuMjUsMTguOTBaTTY3LjM3LDE4Ljg1QzY2LjgwLDE4LjU3IDY2LjgwLDE3LjQwIDY3LjM2LDE1LjY1QzY3LjUwLDE1LjIxIDY3LjcyLDE0LjIyIDY3Ljg1LDEzLjQ1QzY4LjExLDExLjg3IDY4LjQyLDEwLjQ2IDY4LjcwLDkuNTBDNjguODksOC44NCA2OS4xMCw3LjUzIDY5LjEwLDYuOTlDNjkuMTAsNi44MSA2OS4wMSw2LjYwIDY4Ljg1LDYuNDVDNjguNjEsNi4yMCA2OC42MSw2LjIwIDY2LjQ4LDYuMjBDNjQuNTQsNi4yMCA2My42OSw2LjEzIDYzLjUyLDUuOTVDNjMuNDksNS45MiA2My41Niw1LjQ4IDYzLjY4LDQuOTdDNjMuODAsNC40NiA2My45MiwzLjc2IDYzLjk1LDMuMzlDNjQuMDMsMi41NyA2NC4xNiwyLjMwIDY0LjYwLDIuMDhDNjQuOTIsMS45MSA2NS41MywxLjkwIDcyLjk2LDEuOTBDNzguNTUsMS45MCA4MS4wNywxLjkzIDgxLjI5LDIuMDFDODEuODYsMi4yMSA4MS45MywyLjYyIDgxLjU1LDMuNTVDODEuNDIsMy44OCA4MS4zMCw0LjI1IDgxLjMwLDQuMzdDODEuMzAsNC45MyA4MS4wNiw1LjY1IDgwLjgwLDUuOTJDODAuNTIsNi4yMCA4MC41Miw2LjIwIDc4LjAzLDYuMjBDNzUuMjksNi4yMCA3NS4yNiw2LjIxIDc0Ljk3LDYuODJDNzQuNzQsNy4zMCA3NC4xMyw5LjkzIDczLjkwLDExLjM5QzczLjgwLDEyLjA4IDczLjU5LDEyLjk5IDczLjQ1LDEzLjQwQzczLjMxLDEzLjgxIDczLjEyLDE0LjY5IDczLjA0LDE1LjM1QzcyLjk2LDE2LjAxIDcyLjc3LDE2Ljg5IDcyLjYzLDE3LjMwQzcyLjA2LDE4Ljk4IDcyLjEzLDE4Ljk0IDY5LjU4LDE4Ljk1QzY4LjMzLDE4Ljk2IDY3LjUwLDE4LjkyIDY3LjM3LDE4Ljg1Wk04NS42NSwxOC45MUw4MS44NSwxOC44NUw4MC45NiwxOC40MEM3OS44OSwxNy44NSA3OS4xOCwxNy4wOCA3OS4wMCwxNi4yOEM3OC43MywxNS4wMCA3OC45MywxMi41NyA3OS40MywxMS4xNEM3OS42MiwxMC41OSA3OS44NCw5Ljg4IDc5LjkxLDkuNTVDODAuMDQsOC45NiA4MC42MSw3Ljk5IDgxLjE4LDcuMzdDODEuNjEsNi45MiA4Mi45MSw2LjIxIDgzLjUxLDYuMTFDODQuMzksNS45NiA4Ny44Myw1Ljg5IDg5LjU4LDUuOTlDOTEuMTQsNi4wOCA5MS4yMyw2LjEwIDkxLjc4LDYuNDBDOTMuMDcsNy4xMiA5My40Miw3LjY1IDkzLjc1LDkuMzJDOTQuMDMsMTAuNzMgOTQuMzgsMTAuNzIgOTQuODYsOS4yOEM5NS40Miw3LjU4IDk3LjAwLDYuMzUgOTguOTUsNi4wOUM5OS40Myw2LjAzIDEwMS4yMCw2LjAwIDEwMy4zNyw2LjAyQzEwNi45OCw2LjA1IDEwNi45OCw2LjA1IDEwNy4yNCw2LjI5QzEwNy41Niw2LjU5IDEwNy41Nyw2Ljk0IDEwNy4yOSw3Ljg2QzEwNy4wMyw4LjcxIDEwNi43NCw5LjI1IDEwNi40Niw5LjM5QzEwNi4zMyw5LjQ2IDEwNS4zNCw5LjUxIDEwMy45MCw5LjUyQzEwMS42OSw5LjU1IDEwMS41MSw5LjU3IDEwMC45NSw5Ljc5QzEwMC4yMywxMC4wOCA5OS42NywxMC42MiA5OS4zMywxMS4zN0M5OS4wMSwxMi4wNyA5OC44OSwxMy44NSA5OS4xMywxNC40MkM5OS40MiwxNS4xMSA5OS42MCwxNS4xNSAxMDIuNTcsMTUuMTVDMTA1LjE5LDE1LjE1IDEwNS4xOSwxNS4xNSAxMDUuNDYsMTUuNDFDMTA1Ljk2LDE1LjkxIDEwNS44OSwxNi43OSAxMDUuMjQsMTguMTZDMTA0Ljg1LDE4Ljk5IDEwNC45MywxOC45OCAxMDAuNzUsMTguOTFMOTcuMTUsMTguODVMOTYuMjAsMTguMzVDOTUuMjgsMTcuODcgOTUuMjMsMTcuODIgOTQuNjgsMTcuMDBDOTMuOTksMTUuOTggOTMuODQsMTUuMjcgOTMuOTQsMTMuNjVDOTQuMDAsMTIuNzYgOTMuOTAsMTEuNjcgOTMuNzQsMTEuNTFDOTMuNjEsMTEuMzggOTMuMzMsMTEuNzEgOTMuMTUsMTIuMjFDOTMuMDMsMTIuNTYgOTIuNzgsMTIuOTMgOTIuNDUsMTMuMjZDOTEuNzYsMTMuOTcgOTEuNTgsMTQuMDAgODcuNjcsMTQuMDBDODQuOTEsMTQuMDAgODQuNDEsMTQuMDIgODQuMjIsMTQuMTZDODMuODAsMTQuNDUgODMuOTgsMTQuOTkgODQuNjAsMTUuMjRDODQuOTQsMTUuMzggODUuNDgsMTUuNDAgODguMTQsMTUuNDBDOTEuMTQsMTUuNDAgOTEuMjgsMTUuNDEgOTEuNTMsMTUuNjBDOTIuMDEsMTUuOTggOTEuOTgsMTYuOTUgOTEuNDYsMTguMDdDOTEuMDEsMTkuMDMgOTEuMjYsMTkuMDAgODUuNjUsMTguOTFaTTEwNy4yNCwxOC44NEMxMDYuNTQsMTguNjAgMTA2LjUxLDE4LjQ3IDEwNi44MywxNi44MEMxMDYuOTIsMTYuMzMgMTA3LjEwLDE1LjM0IDEwNy4yNCwxNC42MEMxMDcuMzgsMTMuODYgMTA3LjYwLDEyLjgyIDEwNy43NCwxMi4zMEMxMDcuODcsMTEuNzggMTA4LjA1LDEwLjkwIDEwOC4xMywxMC4zNUMxMDguMjIsOS44MCAxMDguNDMsOC45MSAxMDguNTksOC4zN0MxMDguNzYsNy44NCAxMDguOTQsNi45NiAxMDguOTksNi40MkMxMDkuMDUsNS44OSAxMDkuMTgsNS4xOCAxMDkuMzAsNC44NkMxMDkuNDEsNC41MyAxMDkuNTcsMy45MCAxMDkuNjYsMy40NkMxMDkuOTcsMS45MSAxMTAuMDYsMS44NiAxMTIuNDcsMS45MkMxMTQuNzYsMS45NiAxMTQuOTYsMi4xNCAxMTQuNDQsMy42NkMxMTQuMzAsNC4wOSAxMTQuMTUsNC43MCAxMTQuMTMsNS4wMUMxMTQuMDgsNS41MyAxMTQuMDksNS41OCAxMTQuMzUsNS43OEMxMTQuNjEsNS45OSAxMTQuNzMsNi4wMCAxMTYuMzQsNi4wMEMxMTguNjEsNi4wMCAxMTkuMDMsNi4wOCAxMjAuMDQsNi42OEMxMjAuNzMsNy4wOSAxMjAuOTIsNy4yNyAxMjEuMzUsNy44OUMxMjEuODUsOC42MiAxMjEuODUsOC42MiAxMjEuODgsOS41NkMxMjEuOTIsMTAuNjUgMTIxLjc5LDExLjU1IDEyMS40NCwxMi41NUMxMjEuMzAsMTIuOTMgMTIxLjEyLDEzLjc3IDEyMS4wNSwxNC40MEMxMjAuOTcsMTUuMDMgMTIwLjc3LDE2LjAwIDEyMC42MSwxNi41NUMxMjAuNDUsMTcuMTAgMTIwLjI3LDE3Ljc0IDEyMC4yMSwxNy45N0MxMjAuMTQsMTguMjEgMTE5Ljk5LDE4LjUyIDExOS44NSwxOC42N0MxMTkuNjIsMTguOTUgMTE5LjYyLDE4Ljk1IDExNy44OCwxOC45NEMxMTUuNDksMTguOTMgMTE1LjIyLDE4Ljc3IDExNS41NCwxNy41MkMxMTUuNjIsMTcuMjEgMTE1Ljc4LDE2LjQxIDExNS44OSwxNS43NUMxMTYuMDAsMTUuMDkgMTE2LjIzLDEzLjk0IDExNi40MSwxMy4yMEMxMTYuOTgsMTAuODAgMTE2LjkzLDEwLjQwIDExNS45OCw5LjgyQzExNS4zNCw5LjQ0IDExNC4zNyw5LjI5IDExMy43Niw5LjUwQzExMy4yOCw5LjY1IDExMy4xMyw5Ljk3IDExMi44OSwxMS4yOUMxMTIuNzksMTEuODcgMTEyLjU5LDEyLjY5IDExMi40NSwxMy4xMEMxMTIuMzEsMTMuNTEgMTEyLjEzLDE0LjM2IDExMi4wNSwxNC45OEMxMTEuOTEsMTYuMDQgMTExLjQ0LDE3LjgyIDExMS4xNCwxOC40MkMxMTEuMDYsMTguNTcgMTEwLjkwLDE4Ljc1IDExMC43NywxOC44MkMxMTAuNDUsMTkuMDAgMTA3Ljc1LDE5LjAyIDEwNy4yNCwxOC44NFpNMjkuNzMsMTUuNDJDMzAuMTMsMTUuMTUgMzAuMjksMTQuODkgMzAuMzAsMTQuNTJDMzAuMzAsMTQuMDQgMjkuOTAsMTMuOTAgMjguNTMsMTMuOTBDMjYuOTAsMTMuOTEgMjYuMjQsMTQuMzAgMjYuNTksMTUuMDZDMjYuNzcsMTUuNDYgMjcuMjMsMTUuNTkgMjguNDAsMTUuNjBDMjkuMjUsMTUuNjAgMjkuNTAsMTUuNTYgMjkuNzMsMTUuNDJaTTQ0Ljc2LDE1LjQxQzQ1LjIwLDE1LjIxIDQ1LjYwLDE0Ljc4IDQ1LjYwLDE0LjQ5QzQ1LjYwLDE0LjQwIDQ1LjQ4LDE0LjIyIDQ1LjMzLDE0LjEwQzQ1LjA3LDEzLjkwIDQ0Ljk2LDEzLjg5IDQzLjY0LDEzLjkyQzQyLjI5LDEzLjk1IDQyLjIwLDEzLjk2IDQxLjk2LDE0LjE5QzQxLjQ3LDE0LjY1IDQxLjY3LDE1LjI5IDQyLjM2LDE1LjUwQzQyLjkxLDE1LjY2IDQ0LjMyLDE1LjYxIDQ0Ljc2LDE1LjQxWk04OC4zOSwxMC42NkM4OC43OCwxMC4zMSA4OC41OSw5Ljc1IDg3Ljk3LDkuNDNDODcuNTgsOS4yMyA4Ni4zMyw5LjIxIDg1Ljc4LDkuMzlDODUuMDQsOS42NCA4NC42NiwxMC40MiA4NS4xMiwxMC43NUM4NS40OCwxMS4wMCA4OC4wOSwxMC45MyA4OC4zOSwxMC42NloiLz48ZyBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iLjU1Ij48bGluZSB4MT0iMjIiIHgyPSIzNCIgeTE9IjI2LjYiIHkyPSIyNi42Ii8+PGxpbmUgeDE9IjkwIiB4Mj0iMTAyIiB5MT0iMjYuNiIgeTI9IjI2LjYiLz48L2c+PHRleHQgeD0iNjIuMCIgeT0iMjguNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjUuMiIgZmlsbD0iIzExMSI+SW4gUHVyc3VpdCBvZiBFeGNlbGxlbmNlPC90ZXh0Pjwvc3ZnPg==" alt="KaarTech">
+    <span class="x">with Wipro for</span>
+    <span class="te">TotalEnergies</span>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+  <button class="hbtn" id="bMenu" aria-label="Menu" aria-expanded="false">☰</button>
+  <button class="hbtn" id="bTheme" aria-label="Switch theme" title="Theme (T)">☀</button>
+  <button class="hbtn" id="bFs" aria-label="Full screen" title="Full screen (F)">⛶</button>
+  <button class="hbtn" id="bKeys" aria-label="Keyboard shortcuts" title="Keys (?)">?</button>
+</header>
+<div id="mnav"></div>
+
+<main>
+<!-- HOME -->
+<section class="view" id="v-home" data-name="Home">
+  <div class="wrap">
+    <div class="hero">
+      <span class="eyebrow">MARTY programme · SAP S/4HANA Build &amp; Pilot Integrator</span>
+      <h1>One <em>Core Model</em> for Refining &amp; Chemicals</h1>
+      <p class="lede">A harmonised, reusable SAP S/4HANA Core Model for TotalEnergies Refining &amp; Chemicals, integrated with the Group’s DeLorean backbone and proven through a pilot in Germany.</p>
+      <div class="ctas">
+        <button class="btn pri" data-go="scope">▶ Start the walkthrough</button>
+        <button class="btn sec" data-go="plan">See the timeline</button>
+      </div>
+      <p class="hint">Hover the pipelines · click one to follow it · → or Space for next</p>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><b data-count="500" data-pre="~">~500</b><span>users in the firm scope</span></div>
+      <div class="kpi"><b data-count="10" data-pre="~">~10</b><span>legal entities</span></div>
+      <div class="kpi"><b data-count="6">6</b><span>countries</span></div>
+      <div class="kpi"><b>Germany</b><span>first pilot</span></div>
+      <div class="kpi"><b>H1 2028</b><span>pilot go-live target</span></div>
+    </div>
+    <div class="about">
+      <div class="card">
+        <span class="eyebrow">Who we are</span>
+        <h3 style="font-size:22px;font-weight:800;margin:10px 0 8px">Wipro leads. KaarTech brings SAP IS-Oil.</h3>
+        <p class="muted" style="font-size:14.5px">Wipro is the prime partner for programme governance and delivery. KaarTech, with Velnox, is the specialist partner for SAP IS-Oil and the related cross-application scope such as MM and SD.</p>
+        <button class="btn sec" style="margin-top:16px" data-go="team">Who does what ›</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>20+</b><span>years of business experience</span></div>
+        <div class="stat"><b>125+</b><span>S/4HANA transformations</span></div>
+        <div class="stat"><b>3,300+</b><span>global projects completed</span></div>
+        <div class="stat"><b>500+</b><span>trusted customers globally</span></div>
+        <div class="stat"><b>15+</b><span>global locations</span></div>
+        <div class="stat"><b>1,000+</b><span>AI-trained professionals</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="legend">Four RC ECC systems feed <b>one MARTY Core Model</b>, linked to DeLorean, flowing to the Germany pilot</div>
+</section>
+
+<!-- SCOPE -->
+<section class="view" id="v-scope" data-name="Scope">
+  <div class="wrap">
+    <div class="vh">
+      <div><span class="eyebrow">01 · Scope of engagement</span><h2>Commodities first. Customer Products when you choose.</h2>
+      <p>The firm scope builds the Commodities Core Model and proves it in Germany. Customer Products is an option, priced separately and exercised at TotalEnergies’ discretion.</p></div>
+      <div class="scopebar" role="group" aria-label="Show scope">
+        <button class="chip" data-sc="firm" aria-pressed="true">Firm scope</button>
+        <button class="chip" data-sc="both" aria-pressed="false">+ Optional scope</button>
+      </div>
+    </div>
+    <div class="scopes">
+      <article class="card scope" id="sFirm">
+        <span class="tag">Firm scope</span>
+        <h3>Commodities Core Model</h3>
+        <p class="muted">Refining and Base Chemicals business processes</p>
+        <div class="facts">
+          <div class="fact"><b>~500</b><span>users</span></div>
+          <div class="fact"><b>~10</b><span>legal entities</span></div>
+          <div class="fact"><b>6</b><span>countries</span></div>
+        </div>
+        <span class="t-s muted" style="font-size:12px">Users, relative</span>
+        <div class="users"><i data-w="33.3"></i></div>
+        <span class="muted" style="font-size:12px">Legal entities</span>
+        <div class="ents" data-n="10"></div>
+        <ul><li><b>Pilot:</b> Germany, the first pilot</li><li>Validates the Core Model before any further rollout</li></ul>
+      </article>
+      <article class="card scope opt off" id="sOpt">
+        <span class="tag g">Optional scope</span>
+        <h3>Customer Products Core Model</h3>
+        <p class="muted">Polymers, resins and specialty products</p>
+        <div class="facts">
+          <div class="fact"><b>~1,000</b><span>users</span></div>
+          <div class="fact"><b>~4</b><span>legal entities</span></div>
+          <div class="fact"><b>2</b><span>countries</span></div>
+        </div>
+        <span class="muted" style="font-size:12px">Users, relative</span>
+        <div class="users"><i data-w="66.6"></i></div>
+        <span class="muted" style="font-size:12px">Legal entities</span>
+        <div class="ents" data-n="4"></div>
+        <ul><li><b>Pilot:</b> Cray Valley, France</li><li>Priced separately; exercised at TotalEnergies’ discretion</li></ul>
+      </article>
+    </div>
+    <div class="twosys">
+      <div class="card"><span class="eyebrow">MARTY</span><h4>The dedicated SAP RC landscape</h4><p class="muted" style="font-size:13.5px">Where the Core Model is built and the pilots run.</p></div>
+      <div class="link"><svg width="90" height="24" viewBox="0 0 90 24"><path d="M4 8H86M86 16H4" stroke="var(--acc)" stroke-width="2" stroke-dasharray="4 7" fill="none"><animate attributeName="stroke-dashoffset" from="0" to="-22" dur="1s" repeatCount="indefinite"/></path></svg>integrated</div>
+      <div class="card"><span class="eyebrow">DeLorean</span><h4>The Group SAP backbone</h4><p class="muted" style="font-size:13.5px">OneFiCoProc (Finance and Procurement), OneAsset and OneMasterData.</p></div>
+    </div>
+    <div class="oos"><span class="mono muted" style="font-size:11px;letter-spacing:.1em">OUT OF SCOPE</span><span class="x">Subsequent global deployment waves</span><span class="x">Recurring RUN / AMS</span></div>
+    <p class="src">Source: MARTY RFP scope as summarised, Nov 2026</p>
+  </div>
+</section>
+
+<!-- LANDSCAPE -->
+<section class="view" id="v-landscape" data-name="Landscape">
+  <div class="wrap">
+    <div class="vh"><div><span class="eyebrow">02 · From ECC to MARTY</span><h2>Four ECC systems in. One Core Model out.</h2>
+    <p>Play the journey: what exists today, how we assess it, what we build in MARTY, and how it connects to DeLorean.</p></div></div>
+    <div class="land">
+      <div class="card svgbox">
+        <svg class="dg" id="dg" viewBox="0 0 1000 540" role="img" aria-label="ECC landscape to MARTY and DeLorean">
+          <g class="zone" id="z-ecc">
+            <rect class="box" x="16" y="16" width="290" height="508" rx="16"/>
+            <text class="t-m" x="34" y="42">TODAY · RC SAP ECC</text>
+            <g class="pill-g">
+              <rect class="pill" x="32" y="54" width="124" height="46" rx="10"/><text class="t-b" x="94" y="74" text-anchor="middle">P8B</text><text class="t-s" x="94" y="90" text-anchor="middle" style="font-size:10px">ECC6 · Commodities</text>
+              <rect class="pill" x="166" y="54" width="124" height="46" rx="10"/><text class="t-b" x="228" y="74" text-anchor="middle">P3B</text><text class="t-s" x="228" y="90" text-anchor="middle" style="font-size:10px">ECC · RC activities</text>
+              <rect class="pill" x="32" y="106" width="124" height="46" rx="10"/><text class="t-b" x="94" y="126" text-anchor="middle">O02</text><text class="t-s" x="94" y="142" text-anchor="middle" style="font-size:10px">ECC · IS-Oil based</text>
+              <rect class="pill" x="166" y="106" width="124" height="46" rx="10"/><text class="t-b" x="228" y="126" text-anchor="middle">O21</text><text class="t-s" x="228" y="142" text-anchor="middle" style="font-size:10px">Polymers sales/supply</text>
+            </g>
+          </g>
+          <g class="zone" id="z-sat">
+            <text class="t-m" x="34" y="186">SATELLITE APPLICATIONS</text>
+            <rect class="pill" x="32" y="198" width="80" height="34" rx="9"/><text class="t-s" x="72" y="219" text-anchor="middle">SURF</text>
+            <rect class="pill" x="121" y="198" width="80" height="34" rx="9"/><text class="t-s" x="161" y="219" text-anchor="middle">SECOIA</text>
+            <rect class="pill" x="210" y="198" width="80" height="34" rx="9"/><text class="t-s" x="250" y="219" text-anchor="middle">COBRISK</text>
+            <rect class="pill" x="32" y="240" width="80" height="34" rx="9"/><text class="t-s" x="72" y="261" text-anchor="middle">CARMEN</text>
+            <rect class="pill" x="121" y="240" width="80" height="34" rx="9"/><text class="t-s" x="161" y="261" text-anchor="middle">APO</text>
+            <rect class="pill" x="210" y="240" width="80" height="34" rx="9"/><text class="t-s" x="250" y="261" text-anchor="middle">BW</text>
+            <text class="t-s" x="34" y="294">+ other connected applications</text>
+          </g>
+          <g class="zone" id="z-if">
+            <rect class="pill" x="32" y="312" width="258" height="92" rx="12"/>
+            <text class="big" x="50" y="360">511</text>
+            <text class="t-b" x="126" y="346">interface records</text>
+            <text class="t-s" x="126" y="364">in the Annex A-02 catalogue,</text>
+            <text class="t-s" x="126" y="380">not 511 confirmed rebuilds</text>
+          </g>
+          <g class="zone" id="z-disp">
+            <text class="t-m" x="34" y="432">EACH OBJECT GETS A DISPOSITION</text>
+            <g id="dispChips"></g>
+          </g>
+
+          <g class="zone" id="z-marty">
+            <rect class="box" x="370" y="56" width="290" height="430" rx="18" style="stroke:var(--acc);stroke-width:1.4"/>
+            <text class="t-m" x="390" y="84">MARTY · SAP S/4HANA</text>
+            <text class="t-h" x="390" y="108">Dedicated RC landscape</text>
+            <g id="z-core"><rect class="pill" x="388" y="126" width="254" height="96" rx="12" style="stroke:var(--acc);stroke-width:1.6"/>
+            <text class="t-m" x="404" y="150" style="fill:var(--acc)">FIRM</text>
+            <text class="t-b" x="404" y="174">Commodities Core Model</text>
+            <text class="t-s" x="404" y="194">Refining &amp; Base Chemicals</text>
+            <text class="t-s" x="404" y="210">built through Fit-to-Standard</text></g>
+            <rect class="pill dash" x="388" y="234" width="254" height="78" rx="12"/>
+            <text class="t-m" x="404" y="257">OPTIONAL</text>
+            <text class="t-b" x="404" y="280">Customer Products Core Model</text>
+            <text class="t-s" x="404" y="298">Polymers, resins, specialty products</text>
+            <g id="z-pilot">
+              <text class="t-m" x="390" y="340">PILOTS</text>
+              <rect class="pill" x="388" y="352" width="122" height="52" rx="10" style="stroke:var(--acc)"/>
+              <text class="t-b" x="449" y="374" text-anchor="middle">Germany</text><text class="t-s" x="449" y="391" text-anchor="middle">firm</text>
+              <rect class="pill dash" x="520" y="352" width="122" height="52" rx="10"/>
+              <text class="t-b" x="581" y="374" text-anchor="middle">Cray Valley, FR</text><text class="t-s" x="581" y="391" text-anchor="middle">optional</text>
+            </g>
+            <text class="t-s" x="390" y="440">Later global deployment waves:</text>
+            <text class="t-s" x="390" y="456">out of scope of this contract</text>
+          </g>
+
+          <g class="zone" id="z-del">
+            <rect class="box" x="726" y="56" width="258" height="290" rx="18"/>
+            <text class="t-m" x="746" y="84">DELOREAN · SAP S/4HANA</text>
+            <text class="t-h" x="746" y="108">Group backbone</text>
+            <rect class="pill" x="744" y="126" width="222" height="56" rx="10"/><text class="t-b" x="762" y="150">OneFiCoProc</text><text class="t-s" x="762" y="168">Finance and Procurement</text>
+            <rect class="pill" x="744" y="190" width="222" height="56" rx="10"/><text class="t-b" x="762" y="214">OneAsset</text><text class="t-s" x="762" y="232">Asset capabilities</text>
+            <rect class="pill" x="744" y="254" width="222" height="56" rx="10"/><text class="t-b" x="762" y="278">OneMasterData</text><text class="t-s" x="762" y="296">Group master data</text>
+          </g>
+          <g class="zone" id="z-shell">
+            <rect class="pill dash" x="726" y="364" width="258" height="122" rx="14"/>
+            <text class="t-m" x="744" y="388">EMPTY-SHELL STARTING POINT</text>
+            <text class="t-s" x="744" y="410">Reference data · org structures</text>
+            <text class="t-s" x="744" y="428">Common configuration</text>
+            <text class="t-s" x="744" y="446">Shared services</text>
+            <text class="t-s" x="744" y="470" style="fill:var(--faint)">subject to validation in Explore</text>
+          </g>
+
+          <path class="edge" id="e-ecc" d="M306 100 C340 100 340 170 388 170"/>
+          <path class="edge" id="e-sat" d="M290 236 C340 236 340 300 370 300"/>
+          <path class="edge" id="e-del1" d="M660 186 L726 186"/>
+          <path class="edge rev" id="e-del2" d="M660 202 L726 202"/>
+          <path class="edge dash" id="e-shell" d="M726 430 C690 430 690 200 660 200"/>
+          <path class="edge" id="e-pilot" d="M515 222 L515 234 M515 312 L515 352"/>
+        </svg>
+      </div>
+      <div class="card nar">
+        <div class="steps" id="lSteps"></div>
+        <span class="eyebrow" id="lEy">Step 1 of 5</span>
+        <h3 id="lT"></h3>
+        <p class="tw" id="lD"></p>
+        <div class="disp" id="disp"></div>
+        <p class="dispd" id="dispd"></p>
+        <div class="ctl"><button class="btn sec" id="lPrev">‹</button><button class="btn pri" id="lPlay">▶ Play</button><button class="btn sec" id="lNext">›</button></div>
+      </div>
+    </div>
+    <div class="confirm"><b>What we’ll confirm in Explore</b><ul><li>Which DeLorean empty-shell elements are available and compatible as MARTY’s starting point.</li><li>How many of the 511 catalogued interfaces need to be rebuilt, and how many can be reused, replaced or retired.</li></ul></div>
+    <p class="src">Source: MARTY RFP landscape as summarised (P8B, P3B, O02, O21; Annex A-02), Nov 2026</p>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="view" id="v-approach" data-name="Approach">
+  <div class="wrap">
+    <div class="vh"><div><span class="eyebrow">03 · Our approach</span><h2 id="apH">Understand, assess, then decide what moves forward</h2>
+    <p id="apP">Four ECC systems are assessed in Explore. What moves forward is built into the MARTY Core Model and integrated with DeLorean. Click a stage to see how we do it.</p></div>
+      <div class="ptabs" role="tablist"><button class="chip on" data-ap="path" role="tab" aria-selected="true">Transition path</button><button class="chip" data-ap="gpo" role="tab" aria-selected="false">GPO model</button></div>
+    </div>
+    <div id="ap-path" class="appr">
+      <div class="card tflow" id="tflow">
+        <button class="ts" data-stage="ecc"><span class="tm">Existing landscape · RC SAP ECC</span>
+          <span class="sys4"><span class="sys"><b>P8B</b><span>ECC6 – Commodities</span></span><span class="sys"><b>P3B</b><span>ECC – RC activities</span></span><span class="sys"><b>O02</b><span>ECC – IS-Oil based</span></span><span class="sys"><b>O21</b><span>ECC – Polymers sales/supply</span></span></span></button>
+        <div class="tcon"><i></i><button class="tchip" data-stage="sta">Explore + Selective Transition Assessment</button><small>Understand, assess and decide what should move forward</small><i></i></div>
+        <button class="ts tgt" data-stage="marty"><span class="tm">SAP RC – MARTY target</span><span class="tp">Dedicated S/4HANA environment where the new RC Core Model is designed and built.</span>
+          <span class="tl"><span>Commodities</span><span>Refining and Base Chemicals</span><span class="o">Customer Products (optional)</span></span></button>
+        <div class="tcon int"><span class="arrows">⇅</span><button class="tchip" data-stage="int">Integration with DeLorean</button></div>
+        <button class="ts del" data-stage="del"><span class="tm">SAP DeLorean – Group backbone</span>
+          <span class="tl"><span><b>OneFiCoProc</b> – Finance and Procurement</span><span><b>OneAsset</b> – Asset capabilities</span><span><b>OneMasterData</b> – Group master data</span></span></button>
+      </div>
+      <div class="card">
+        <span class="eyebrow">How we build the Core Model</span>
+        <ol class="flowlist" id="flow"></ol>
+        <div class="tools"><span class="illus">KTern (or Wipro’s proposed tool)</span><span class="illus">SAP Signavio Process Intelligence</span><span class="illus">Fit-to-Standard</span></div>
+      </div>
+    </div>
+    <div id="ap-gpo" class="appr" hidden>
+      <div class="card">
+        <svg class="dg" id="gpo" viewBox="0 0 640 380" role="img" aria-label="Global Process Owner engagement model">
+          <g class="zone" id="g-us"><rect class="pill" x="14" y="150" width="160" height="64" rx="14" style="stroke:var(--acc)"/><text class="t-b" x="94" y="178" text-anchor="middle">Wipro + KaarTech</text><text class="t-s" x="94" y="196" text-anchor="middle">delivery team</text></g>
+          <g class="zone" id="g-gpo"><circle cx="320" cy="182" r="66" fill="var(--acc-soft)" stroke="var(--acc)" stroke-width="2"/><circle cx="320" cy="182" r="66" fill="none" stroke="var(--acc)" stroke-width="1" opacity=".5"><animate attributeName="r" values="66;84;66" dur="3.2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".5;0;.5" dur="3.2s" repeatCount="indefinite"/></circle><text class="t-h" x="320" y="182" text-anchor="middle" style="font-size:24px">GPO</text><text class="t-s" x="320" y="202" text-anchor="middle">Global Process Owner</text></g>
+          <g class="zone" id="g-r"><rect class="pill" x="462" y="54" width="166" height="60" rx="12"/><text class="t-b" x="545" y="80" text-anchor="middle">Process Leads</text><text class="t-s" x="545" y="97" text-anchor="middle">Refining &amp; Base Chemicals</text>
+          <rect class="pill" x="462" y="152" width="166" height="60" rx="12"/><text class="t-b" x="545" y="178" text-anchor="middle">Cross-functional</text><text class="t-s" x="545" y="195" text-anchor="middle">process owners</text>
+          <rect class="pill" x="462" y="250" width="166" height="60" rx="12"/><text class="t-b" x="545" y="276" text-anchor="middle">Regional SMEs</text><text class="t-s" x="545" y="293" text-anchor="middle">by country</text></g>
+          <path class="edge" id="gL1" d="M174 174 L254 174"/>
+          <path class="edge rev" id="gL2" d="M174 192 L254 192"/>
+          <path class="edge" id="gR1" d="M384 166 C420 166 420 84 462 84"/>
+          <path class="edge" id="gR2" d="M386 182 L462 182"/>
+          <path class="edge" id="gR3" d="M384 198 C420 198 420 280 462 280"/>
+          <path class="edge dash" id="gD" d="M94 214 C94 350 400 352 462 296"/>
+          <text class="t-m" x="250" y="352" id="gDl" opacity="0">DIRECT · ONLY VIA THE GPO</text>
+        </svg>
+      </div>
+      <div class="card"><span class="eyebrow">How the GPO works</span><div class="rules one" id="rules"></div></div>
+    </div>
+    <p class="src">Source: proposed approach and target landscape, MARTY response summary, Nov 2026</p>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="view" id="v-team" data-name="Who does what">
+  <div class="wrap">
+    <div class="vh"><div><span class="eyebrow">04 · Who does what</span><h2>Clear ownership, side by side</h2>
+    <p>Wipro owns the programme and the technical delivery. KaarTech owns SAP IS-Oil functionally and validates every IS-Oil touchpoint. Hover a row to see the pair.</p></div></div>
+    <div class="rolef" id="rolef"></div>
+    <div class="rolehead"><div></div><div class="card"><span class="eyebrow" style="color:var(--muted)">Prime partner</span><h4>Wipro</h4></div><div class="card kt"><span class="eyebrow">Specialist partner · SAP IS-Oil</span><h4>KaarTech / Velnox</h4></div></div>
+    <div id="roles"></div>
+    <p class="src">Source: Wipro–KaarTech responsibility split, Nov 2026</p>
+  </div>
+</section>
+
+<!-- PLAN -->
+<section class="view" id="v-plan" data-name="Timeline">
+  <div class="wrap">
+    <div class="vh"><div><span class="eyebrow">05 · Delivery timeline</span><h2>Feb 2027 to Aug 2028: Core Model in 2027, pilot live in H1 2028</h2>
+    <p>Click any bar for its activities and environments. Play the plan to watch it unfold month by month.</p></div>
+      <div class="ptabs" role="tablist"><button class="chip on" data-pt="gantt" role="tab" aria-selected="true">Timeline</button><button class="chip" data-pt="sheet" role="tab" aria-selected="false">Sequencing sheet</button></div>
+    </div>
+    <div id="pt-gantt">
+      <div class="pbar"><button class="btn pri" id="gPlay">▶ Play the plan</button><span class="cap" id="gCap">Prepare → Explore → Realize → Deploy → Hypercare</span></div>
+      <div class="card gwrap" style="padding:0"><div class="gantt" id="gantt"></div></div>
+      <div class="confirm"><b>To be agreed together</b><ul><li>Exact phase boundaries and exit criteria once DEV availability is confirmed (Build starts as design areas become approved and stable).</li><li>Which pilots “Pilot A/B: Localization” covers if the optional Cray Valley scope is exercised.</li></ul></div>
+    </div>
+    <div id="pt-sheet" hidden>
+      <div class="rolef" id="envf" style="margin-top:6px"></div>
+      <div class="card gwrap" style="padding:0"><table class="sheet" id="sheet"><thead><tr><th>Month</th><th>RFP target environment</th><th>Purpose (RFP)</th><th>Proposed activities</th></tr></thead><tbody></tbody></table></div>
+    </div>
+    <p class="src">Source: proposed delivery sequencing and project timeline (Feb 2027 – Aug 2028), Nov 2026</p>
+  </div>
+</section>
+
+<!-- COMMERCIALS -->
+<section class="view" id="v-commercials" data-name="Commercials">
+  <div class="wrap">
+    <div class="vh"><div><span class="eyebrow">07 · Commercials <span class="tag" style="margin-left:6px">Internal</span></span><h2>Price, effort and margin, live</h2>
+    <p>Edit the KT GM% for Commodities onsite and offshore. Commodities prices and blended rates update, and Customer Products is re-priced at the Commodities blended rates, so its GM% follows.</p></div>
+      <div class="card gmctl">
+        <label>Onsite KT GM% <span class="gmv"><input type="number" id="gmOn" min="0" max="80" step="0.5" value="30">%</span></label><input type="range" id="gmOnR" min="0" max="80" step="0.5" value="30">
+        <label>Offshore KT GM% <span class="gmv"><input type="number" id="gmOff" min="0" max="80" step="0.5" value="30">%</span></label><input type="range" id="gmOffR" min="0" max="80" step="0.5" value="30">
+        <button class="chip" id="gmReset">↺ Reset to 30% / 30%</button>
+      </div>
+    </div>
+    <div class="ckpis" id="ckpis"></div>
+    <div class="ptabs" style="margin:22px 0 12px" role="tablist"><button class="chip on" data-ct="c" role="tab" aria-selected="true">Firm scope: Commodities</button><button class="chip" data-ct="d" role="tab" aria-selected="false">Optional scope: Customer Products</button></div>
+    <div id="ct-c"></div><div id="ct-d" hidden></div>
+    <div class="card bufn">
+      <span class="eyebrow">Note · buffer built into the estimate</span>
+      <div class="bufg">
+        <div><div class="hrs"><div><b>8 h</b><span>Velnox basis · 22 days × 8 h / month</span><i style="width:88.9%"></i></div><div><b>9 h</b><span>Our basis · 22 days × 9 h / month</span><i class="u" style="width:100%"></i></div></div>
+          <p class="muted" style="font-size:13.5px;margin-top:12px">A sufficient buffer has been factored into the overall effort estimation to mitigate delivery risks.</p></div>
+        <div class="bufk"><div><b id="bufC">~10,000</b><span>additional hours · Commodities</span></div><div><b id="bufD">~3,300</b><span>additional hours · Customer Products</span></div></div>
+        <ul class="muted" style="font-size:13.5px;margin:0;padding-left:18px">
+          <li>On top of Velnox’s pricing we include a <b>30% margin for Commodities</b> and a <b>35% margin for Customer Products</b> (at the base settings).</li>
+          <li>Our internal costing uses Velnox’s resource loading and our role-based salaries. After margins, the margin in the KaarTech price is <b id="nGmC">56.70%</b> for Commodities and <b id="nGmD">70.09%</b> for Customer Products.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="src">Source: KaarTech commercials (Velnox resource loading and KT internal costing), Nov 2026 · Internal only</p>
+  </div>
+</section>
+
+<!-- DECISION -->
+<section class="view" id="v-next" data-name="Decision">
+  <div class="wrap">
+    <div class="vh"><div><span class="eyebrow">08 · Decision perspective</span><h2>Why this deserves a yes</h2>
+    <p>Four reasons to go ahead, the protections already in place, and the decisions we need today.</p></div></div>
+    <div class="dpts" id="dpts"></div>
+    <div class="card prot"><span class="eyebrow">Protections in the Wipro–KaarTech agreement</span><ul id="prot"></ul></div>
+    <h3 class="askh">What we’re asking for</h3>
+    <div id="asks"></div>
+    <div class="asum" id="asum"></div>
+    <p class="src">Source: decision perspective and scope protections, MARTY summary, Nov 2026 · Internal only</p>
+  </div>
+</section>
+</main>
+
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <button class="hbtn x" id="dX" aria-label="Close">×</button>
+  <span class="eyebrow" id="dPh"></span>
+  <h3 id="dT"></h3>
+  <span class="when" id="dW"></span>
+  <div id="dB"></div>
+  <div class="dnav"><button class="btn sec" id="dPrev">← Previous</button><button class="btn sec" id="dNext">Next →</button></div>
+</aside>
+
+<div class="fnav"><button class="hbtn" id="fPrev" aria-label="Previous section">‹</button><button class="hbtn" id="fNext" aria-label="Next section">›</button></div>
+<div class="prog" id="prog"></div>
+<div id="keys"><div class="card"><div style="display:flex;justify-content:space-between"><b>Keys</b><button id="kX">✕</button></div>
+<dl><dt>→ Space</dt><dd>Next section</dd><dt>←</dt><dd>Previous section</dd><dt>← → </dt><dd>Timeline: previous / next phase (drawer open)</dd><dt>P</dt><dd>Play / stop (timeline or landscape)</dd><dt>T</dt><dd>Light / dark theme</dd><dt>F</dt><dd>Full screen</dd><dt>Esc</dt><dd>Close panels</dd></dl></div></div>
+
+<script>
+(()=>{
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const VIEWS=['home','scope','landscape','approach','team','plan','commercials','next'];
+const NAMES={home:'Home',scope:'Scope',landscape:'Landscape',approach:'Approach',team:'Who does what',plan:'Timeline',commercials:'Commercials',next:'Decision'};
+let cur='home';
+
+/* ---------- nav ---------- */
+const tabs=$('#tabs'),mnav=$('#mnav');
+VIEWS.forEach(v=>{[tabs,mnav].forEach(p=>{const b=document.createElement('button');b.textContent=NAMES[v];b.dataset.go=v;p.appendChild(b)})});
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){go(g.dataset.go);mnav.classList.remove('open')}});
+$('#bMenu').onclick=e=>{e.stopPropagation();mnav.classList.toggle('open');$('#bMenu').setAttribute('aria-expanded',mnav.classList.contains('open'))};
+function go(v,push=true){if(!VIEWS.includes(v))v='home';cur=v;clearInterval(rT);document.body.dataset.view=v;
+  $$('.view').forEach(s=>s.classList.toggle('act',s.id==='v-'+v));
+  $$('[data-go]',tabs).concat($$('[data-go]',mnav)).forEach(b=>b.toggleAttribute('aria-current',b.dataset.go===v)||b.dataset.go===v&&b.setAttribute('aria-current','page'));
+  $$('nav.tabs button,#mnav button').forEach(b=>{if(b.dataset.go===v)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+  $('#prog').style.width=((VIEWS.indexOf(v)+1)/VIEWS.length*100)+'%';
+  if(push)history.replaceState(null,'','#'+v);scrollTo(0,0);closeDrawer();stopPlan();
+  enter[v]&&enter[v]()}
+const step=d=>go(VIEWS[Math.max(0,Math.min(VIEWS.length-1,VIEWS.indexOf(cur)+d))]);
+$('#fPrev').onclick=()=>step(-1);$('#fNext').onclick=()=>step(1);
+
+/* theme / fs / keys */
+function setTheme(t){document.documentElement.dataset.theme=t;$('#bTheme').textContent=t==='dark'?'☀':'☾';try{localStorage.setItem('te-theme',t)}catch(e){}readColors()}
+$('#bTheme').onclick=()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
+const toggleFS=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(e){}};
+$('#bFs').onclick=toggleFS;
+$('#bKeys').onclick=()=>$('#keys').classList.add('open');$('#kX').onclick=()=>$('#keys').classList.remove('open');
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea,select')||e.metaKey||e.ctrlKey||e.altKey)return;
+  const k=e.key;
+  if(k==='Escape'){closeDrawer();$('#keys').classList.remove('open');mnav.classList.remove('open');return}
+  if(drawerOpen&&(k==='ArrowRight'||k==='ArrowLeft')){e.preventDefault();openPhase(curPhase+(k==='ArrowRight'?1:-1));return}
+  if(k==='ArrowRight'||k===' '||k==='PageDown'){e.preventDefault();step(1)}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();step(-1)}
+  else if(k==='t'||k==='T')$('#bTheme').click();
+  else if(k==='f'||k==='F')toggleFS();
+  else if(k==='?')$('#keys').classList.toggle('open');
+  else if(k==='p'||k==='P'){if(cur==='plan')togglePlan();else if(cur==='landscape')$('#lPlay').click()}
+});
+
+/* ---------- background: refinery process flow ---------- */
+const cv=$('#bg'),c=cv.getContext('2d');let W=0,H=0,paths=[],parts=[],bub=[],col=null,C={},mouse={x:-1e4,y:-1e4},hov=-1,raf=0,last=0;
+function readColors(){const s=getComputedStyle(document.documentElement);['--text','--acc','--accf','--line2','--bg','--panel','--faint','--opt','--muted'].forEach(n=>C[n]=s.getPropertyValue(n).trim())}
+function mkPath(pts,o){let L=0;const seg=[];for(let i=1;i<pts.length;i++){const[a,b]=[pts[i-1],pts[i]],l=Math.hypot(b[0]-a[0],b[1]-a[1]);seg.push({a,b,l,s:L});L+=l}return Object.assign({pts,seg,L},o)}
+function at(p,d){d=Math.max(0,Math.min(p.L,d));for(const s of p.seg){if(d<=s.s+s.l){const t=(d-s.s)/s.l;return{x:s.a[0]+(s.b[0]-s.a[0])*t,y:s.a[1]+(s.b[1]-s.a[1])*t,nx:-(s.b[1]-s.a[1])/s.l,ny:(s.b[0]-s.a[0])/s.l}}}const s=p.seg[p.seg.length-1];return{x:s.b[0],y:s.b[1],nx:0,ny:1}}
+function layout(){const D=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*D;cv.height=H*D;cv.style.width=W+'px';cv.style.height=H+'px';c.setTransform(D,0,0,D,0,0);
+  const wide=W>980,bx=wide?W*.48:W*.03,bw=wide?W*.49:W*.94,by=H*.17,bh=H*.62;
+  const cw=Math.max(54,bw*.11),cxm=bx+bw*.5,ct=by+bh*.12,cb=by+bh*.96;col={x:cxm-cw/2,y:ct,w:cw,h:cb-ct};
+  paths=[];const feeds=['P8B','P3B','O02','O21'];
+  feeds.forEach((n,i)=>{const y0=by+bh*(.3+i*.17),y1=ct+col.h*(.38+i*.15),x0=bx,x1=bx+bw*.22,x2=bx+bw*.3;
+    paths.push(mkPath([[x0,y0],[x1,y0],[x2,y1],[col.x,y1]],{kind:'feed',label:n,go:'landscape',sp:46}))});
+  const outs=[['Germany pilot · firm','out',.18,.2,'scope'],['Cray Valley, France · optional','opt',.45,.48,'scope'],['Global waves · out of scope','fut',.72,.8,'scope']];
+  outs.forEach(([n,k,yc,yt,g])=>{const y1=ct+col.h*yc,y2=by+bh*yt,x1=bx+bw*.7,x2=bx+bw*.78;
+    paths.push(mkPath([[col.x+col.w,y1],[x1,y1],[x2,y2],[bx+bw,y2]],{kind:k,label:n,go:g,sp:k==='out'?52:30}))});
+  const busY=by-H*.035;
+  paths.push(mkPath([[bx+bw*.08,busY],[bx+bw,busY]],{kind:'bus',label:'DeLorean · Group backbone',go:'landscape',sp:36}));
+  paths.push(mkPath([[cxm-7,busY],[cxm-7,ct]],{kind:'link',label:'',go:'landscape',sp:30}));
+  paths.push(mkPath([[cxm+7,ct],[cxm+7,busY]],{kind:'link',label:'',go:'landscape',sp:30}));
+  parts=[];paths.forEach((p,i)=>{if(p.kind==='fut')return;const n=Math.max(2,Math.round(p.L/(p.kind==='opt'?130:p.kind==='link'?40:62)));
+    for(let j=0;j<n;j++)parts.push({p:i,d:Math.random()*p.L,off:0,shape:1+Math.floor(Math.random()*3),rot:Math.random()*6.28,glow:0})});
+  bub=[];for(let i=0;i<22;i++)bub.push({x:Math.random(),y:Math.random(),v:.04+Math.random()*.06,r:1.5+Math.random()*2.5});
+  if(RM)draw(0)}
+function mol(x,y,n,r,rot,color,a){c.globalAlpha=a;c.fillStyle=color;c.strokeStyle=color;c.lineWidth=1.2;
+  const pts=[[0,0]];if(n>1)pts.push([Math.cos(rot)*r*2.6,Math.sin(rot)*r*2.6]);if(n>2)pts.push([Math.cos(rot+2.1)*r*2.6,Math.sin(rot+2.1)*r*2.6]);
+  for(let i=1;i<pts.length;i++){c.beginPath();c.moveTo(x,y);c.lineTo(x+pts[i][0],y+pts[i][1]);c.stroke()}
+  pts.forEach((p,i)=>{c.beginPath();c.arc(x+p[0],y+p[1],i?r*.7:r,0,6.283);c.fill()});c.globalAlpha=1}
+function pipe(p,h){c.lineCap='round';c.lineJoin='round';c.beginPath();p.pts.forEach((q,i)=>i?c.lineTo(q[0],q[1]):c.moveTo(q[0],q[1]));
+  const dashed=p.kind==='opt'||p.kind==='fut';c.setLineDash(p.kind==='fut'?[2,7]:dashed?[10,8]:[]);
+  c.globalAlpha=p.kind==='fut'?.4:1;c.strokeStyle=h?C['--acc']:C['--line2'];
+  if(dashed){c.lineCap='butt';c.lineWidth=2;c.stroke();c.setLineDash([]);c.lineCap='round';c.globalAlpha=1;return}
+  c.lineWidth=p.kind==='link'?5:9;c.stroke();c.strokeStyle=C['--bg'];c.lineWidth=p.kind==='link'?2.5:5.5;c.stroke();c.globalAlpha=1}
+function label(p,h){if(!p.label)return;c.font=(h?'600 ':'500 ')+'11px "JetBrains Mono",monospace';c.fillStyle=h?C['--acc']:C['--muted'];c.globalAlpha=p.kind==='fut'?.6:1;
+  const a=p.pts[0],b=p.pts[p.pts.length-1];
+  if(p.kind==='feed'){c.textAlign='left';c.fillText(p.label,a[0],a[1]-10)}
+  else if(p.kind==='bus'){c.textAlign='left';c.fillText(p.label.toUpperCase(),a[0],a[1]-12)}
+  else{c.textAlign='right';c.fillText(p.label,b[0],b[1]-11)}c.globalAlpha=1}
+function draw(dt){c.clearRect(0,0,W,H);if(!col)return;const home=cur==='home';
+  // headings
+  c.font='500 10px "JetBrains Mono",monospace';c.fillStyle=C['--faint'];c.textAlign='left';
+  const f0=paths[0];c.fillText('RC SAP ECC TODAY',f0.pts[0][0],f0.pts[0][1]-30);
+  paths.forEach((p,i)=>pipe(p,home&&i===hov));
+  // column
+  c.fillStyle=C['--panel'];c.strokeStyle=C['--accf'];c.lineWidth=1.6;c.beginPath();c.roundRect(col.x,col.y,col.w,col.h,col.w/2.4);c.fill();c.stroke();
+  c.strokeStyle=C['--line2'];c.lineWidth=1;for(let i=1;i<9;i++){const y=col.y+col.h*i/9;c.beginPath();c.moveTo(col.x+8,y);c.lineTo(col.x+col.w-8,y);c.stroke()}
+  bub.forEach(b=>{if(dt){b.y-=b.v*dt;if(b.y<0){b.y=1;b.x=Math.random()}}c.globalAlpha=.25+.55*(1-b.y);c.fillStyle=C['--accf'];c.beginPath();c.arc(col.x+10+b.x*(col.w-20),col.y+10+b.y*(col.h-20),b.r,0,6.283);c.fill()});c.globalAlpha=1;
+  c.textAlign='center';c.font='700 13px Montserrat,sans-serif';c.fillStyle=C['--text'];c.fillText('MARTY',col.x+col.w/2,col.y+col.h+22);
+  c.font='500 10px "JetBrains Mono",monospace';c.fillStyle=C['--muted'];c.fillText('CORE MODEL · S/4HANA',col.x+col.w/2,col.y+col.h+38);
+  // particles
+  parts.forEach(q=>{const p=paths[q.p];if(dt){q.d+=p.sp*dt;if(q.d>p.L)q.d-=p.L;q.rot+=dt*.8}
+    const o=at(p,q.d);let dx=o.x-mouse.x,dy=o.y-mouse.y,dist=Math.hypot(dx,dy);
+    if(home&&dist<110){const f=(110-dist)/110;q.off+=((dx*o.nx+dy*o.ny)>=0?1:-1)*f*2.2;q.glow=Math.min(1,q.glow+f*.2)}
+    q.off*=.9;q.glow*=.94;q.off=Math.max(-26,Math.min(26,q.off));
+    const x=o.x+o.nx*q.off,y=o.y+o.ny*q.off,isOpt=p.kind==='opt';
+    mol(x,y,q.shape,2.2+q.glow*1.6,q.rot,q.glow>.15||paths.indexOf(p)===hov?C['--acc']:isOpt?C['--opt']:C['--accf'],isOpt?.6:.9)});
+  paths.forEach((p,i)=>label(p,home&&i===hov))}
+function loop(t){raf=0;const dt=Math.min(.05,(t-(last||t))/1000);last=t;draw(dt);if(!document.hidden)raf=requestAnimationFrame(loop)}
+function start(){if(RM){draw(0);return}if(!raf){last=0;raf=requestAnimationFrame(loop)}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)start()});
+function nearest(x,y){let best=-1,bd=16;paths.forEach((p,i)=>{if(!p.label&&p.kind!=='link')return;for(const s of p.seg){const vx=s.b[0]-s.a[0],vy=s.b[1]-s.a[1];let t=((x-s.a[0])*vx+(y-s.a[1])*vy)/(s.l*s.l);t=Math.max(0,Math.min(1,t));const d=Math.hypot(x-(s.a[0]+vx*t),y-(s.a[1]+vy*t));if(d<bd){bd=d;best=i}}});return best}
+addEventListener('pointermove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;if(cur!=='home'){hov=-1;return}
+  const over=e.target.closest('button,a,.card,.kpis,header,.hero h1,.hero p');hov=over?-1:nearest(e.clientX,e.clientY);document.body.style.cursor=hov>=0?'pointer':'';if(RM)draw(0)},{passive:true});
+addEventListener('pointerleave',()=>{mouse.x=mouse.y=-1e4;hov=-1});
+addEventListener('click',e=>{if(cur==='home'&&hov>=0&&!e.target.closest('button,a,.card')){const g=paths[hov].go;document.body.style.cursor='';hov=-1;go(g)}});
+addEventListener('resize',()=>{clearTimeout(layout.t);layout.t=setTimeout(layout,120)});
+
+/* ---------- home ---------- */
+const enter={};
+enter.home=()=>{};
+
+/* ---------- scope ---------- */
+$$('.ents').forEach(e=>{for(let i=0;i<+e.dataset.n;i++){const s=document.createElement('i');s.style.transitionDelay=(i*60)+'ms';e.appendChild(s)}});
+function setScope(m){$$('[data-sc]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.sc===m));
+  const both=m==='both';$('#sOpt').classList.toggle('off',!both);
+  [['#sFirm',true],['#sOpt',both]].forEach(([s,on])=>{const el=$(s);el.classList.toggle('shown',on);$$('.users i',el).forEach(i=>i.style.width=on?i.dataset.w+'%':'0')})}
+$$('[data-sc]').forEach(b=>b.onclick=()=>setScope(b.dataset.sc));
+enter.scope=()=>{setScope('firm');setTimeout(()=>setScope($('[data-sc="both"]').getAttribute('aria-pressed')==='true'?'both':'firm'),50)};
+
+/* ---------- landscape ---------- */
+const DISP=[['Reuse','Keep what already works and fits the Core Model.'],['Transform','Adapt an existing object to the S/4HANA standard.'],['Rebuild','Develop again where the design changes.'],['Replace','Use standard S/4HANA, DeLorean or a satellite instead.'],['Retire','Switch off what is no longer needed.']];
+const dc=$('#dispChips');DISP.forEach(([n],i)=>{const x=32+(i%3)*88,y=444+Math.floor(i/3)*38;dc.insertAdjacentHTML('beforeend',`<rect class="pill" x="${x}" y="${y}" width="80" height="30" rx="8"/><text class="t-s" x="${x+40}" y="${y+19}" text-anchor="middle">${n}</text>`)});
+const disp=$('#disp');DISP.forEach(([n,d],i)=>{const b=document.createElement('button');b.textContent=n;b.onclick=()=>{$$('button',disp).forEach(x=>x.classList.toggle('on',x===b));$('#dispd').textContent=d};disp.appendChild(b)});
+const LS=[
+ {t:'Today: four ECC systems',d:'The RC SAP ECC perimeter for MARTY has four systems: P8B, P3B, O02 and O21. Around them sit satellite applications such as SURF, SECOIA, COBRISK, CARMEN, APO and BW. The Annex A-02 catalogue lists 511 interface records.',z:['z-ecc','z-sat','z-if'],e:[]},
+ {t:'Assess: decide object by object',d:'In Explore, we map current processes, configuration, custom developments and dependencies, using KTern (or Wipro’s proposed tool) and Signavio Process Intelligence. Each object is selectively reused, transformed, rebuilt, replaced or retired.',z:['z-ecc','z-if','z-disp','z-core'],e:['e-ecc'],disp:1},
+ {t:'Build: the Commodities Core Model',d:'Fit-to-Standard defines one global Commodities Core Model in the dedicated MARTY S/4HANA environment. Where it is available and compatible, DeLorean’s empty shell gives a head start on reference data, organisational structures, common configuration and shared services.',z:['z-marty','z-shell'],e:['e-shell']},
+ {t:'Integrate: DeLorean and satellites',d:'MARTY connects to DeLorean, the Group backbone: OneFiCoProc for Finance and Procurement, OneAsset for asset capabilities and OneMasterData for Group master data. It also connects to the relevant satellite applications.',z:['z-marty','z-del','z-sat'],e:['e-del1','e-del2','e-sat']},
+ {t:'Pilot: prove it in Germany',d:'The Core Model is validated through the Germany pilot. Cray Valley, France follows if TotalEnergies exercises the optional Customer Products scope. Later global waves are outside this contract.',z:['z-pilot','z-core'],e:['e-pilot']}];
+let ls=0,lsT=0,twT=0;const lSteps=$('#lSteps');LS.forEach((s,i)=>{const b=document.createElement('button');b.textContent=(i+1)+' · '+s.t.split(':')[0];b.onclick=()=>{stopLS();showLS(i)};lSteps.appendChild(b)});
+function typew(el,txt){clearInterval(twT);if(RM){el.textContent=txt;return}let i=0;el.textContent='';twT=setInterval(()=>{i+=3;el.textContent=txt.slice(0,i);if(i>=txt.length)clearInterval(twT)},14)}
+function showLS(i){ls=(i+LS.length)%LS.length;const s=LS[ls],dg=$('#dg');dg.classList.add('focus');
+  $$('.zone',dg).forEach(z=>z.classList.toggle('hl',s.z.includes(z.id)||s.z.some(id=>z.querySelector('#'+id))));
+  $$('#z-core,#z-pilot').forEach(z=>z.style.opacity=s.z.includes(z.id)?1:'');
+  $$('.edge',dg).forEach(e=>e.classList.toggle('live',s.e.includes(e.id)));
+  $$('button',lSteps).forEach((b,j)=>b.classList.toggle('on',j===ls));
+  $('#lEy').textContent=`Step ${ls+1} of ${LS.length}`;$('#lT').textContent=s.t;typew($('#lD'),s.d);
+  disp.classList.toggle('show',!!s.disp);$('#dispd').textContent=s.disp?'Tap a disposition to see what it means.':'';$$('button',disp).forEach(x=>x.classList.remove('on'))}
+function stopLS(){clearInterval(lsT);lsT=0;$('#lPlay').textContent='▶ Play'}
+$('#lPrev').onclick=()=>{stopLS();showLS(ls-1)};$('#lNext').onclick=()=>{stopLS();showLS(ls+1)};
+$('#lPlay').onclick=()=>{if(lsT){stopLS();return}$('#lPlay').textContent='❚❚ Pause';showLS(0);lsT=setInterval(()=>{if(ls===LS.length-1){stopLS();return}showLS(ls+1)},6500)};
+enter.landscape=()=>{stopLS();showLS(0)};
+
+/* ---------- approach ---------- */
+const RULES=[
+ {t:'One channel in',d:'Wipro and KaarTech take process discussions, requirements, decisions and clarifications to the GPO.',e:['gL1']},
+ {t:'GPO coordinates internally',d:'The GPO works with the Process Leads, cross-functional owners and regional SMEs.',e:['gR1','gR2','gR3']},
+ {t:'Consolidated answers back',d:'The GPO resolves internal alignment and brings agreed requirements, deviations and decisions back.',e:['gR1','gR2','gR3','gL2']},
+ {t:'Direct sessions, aligned',d:'When a workshop needs a specific lead or SME, it is coordinated through and aligned with the GPO.',e:['gD','gL1'],lab:1}];
+const rules=$('#rules');let rI=0,rT=0;
+RULES.forEach((r,i)=>{const b=document.createElement('button');b.className='rule';b.innerHTML=`<b>${i+1}. ${r.t}</b>${r.d}`;b.onclick=()=>{clearInterval(rT);showRule(i)};rules.appendChild(b)});
+function showRule(i){rI=i;const r=RULES[i],g=$('#gpo');g.classList.add('focus');$$('.edge',g).forEach(e=>e.classList.toggle('live',r.e.includes(e.id)));
+  $$('.zone',g).forEach(z=>z.classList.add('hl'));$('#gDl').setAttribute('opacity',r.lab?1:0);$$('.rule').forEach((b,j)=>b.classList.toggle('on',j===i))}
+const FLOW=[
+ ['Set up the GPO','Establish and confirm the Global Process Owner and the process ownership structure at the start of Explore.'],
+ ['Understand today','Map existing ECC processes, configuration, custom developments and operational dependencies, using KTern (or Wipro’s proposed tool) and Signavio Process Intelligence.'],
+ ['Validate with the GPO','Confirm current processes, requirements and business variations through the GPO structure.'],
+ ['Define the Core Model','Define the global Commodities Core Model through Fit-to-Standard.'],
+ ['Decide what carries over','Assess existing functions and technical objects for selective reuse, transformation, rebuilding, replacement or retirement.'],
+ ['Build and integrate','Build the target functions in the dedicated SAP RC S/4HANA environment, and integrate with DeLorean and the relevant satellite applications.']];
+$('#flow').innerHTML=FLOW.map(([t,d],i)=>`<li${i===0?' class="open"':''}><button aria-expanded="${i===0}"><span class="n">0${i+1}</span>${t}<span class="pl">+</span></button><div class="bd"><div>${d}</div></div></li>`).join('');
+const ST2F={ecc:1,sta:4,marty:3,int:5,del:5},F2ST=[null,'ecc','ecc','marty','sta','int'];
+function openFlow(i,fromStage){$$('#flow li').forEach((x,j)=>{x.classList.toggle('open',j===i);$('button',x).setAttribute('aria-expanded',j===i)});
+  const st=fromStage||F2ST[i];$$('#tflow [data-stage]').forEach(e=>e.classList.toggle('on',!!st&&(e.dataset.stage===st||(st==='int'&&e.dataset.stage==='del'))))}
+$$('#flow li').forEach((li,i)=>$('button',li).onclick=()=>openFlow(li.classList.contains('open')?-1:i));
+$$('#tflow [data-stage]').forEach(e=>e.onclick=()=>openFlow(ST2F[e.dataset.stage],e.dataset.stage));
+function apTab(t){$$('[data-ap]').forEach(x=>{x.classList.toggle('on',x.dataset.ap===t);x.setAttribute('aria-selected',x.dataset.ap===t)});$('#ap-path').hidden=t!=='path';$('#ap-gpo').hidden=t!=='gpo';
+  $('#apH').textContent=t==='path'?'Understand, assess, then decide what moves forward':'One voice for each process: the GPO';
+  $('#apP').textContent=t==='path'?'Four ECC systems are assessed in Explore. What moves forward is built into the MARTY Core Model and integrated with DeLorean. Click a stage to see how we do it.':'The Global Process Owner is set up at the start of Explore. Requirements, decisions and feedback reach the delivery team through one consolidated channel.';
+  clearInterval(rT);if(t==='gpo'){showRule(0);if(!RM)rT=setInterval(()=>showRule((rI+1)%RULES.length),4200)}}
+$$('[data-ap]').forEach(b=>b.onclick=()=>apTab(b.dataset.ap));
+enter.approach=()=>{apTab('path');openFlow(0);const tf=$('#tflow');if(RM)return;tf.classList.add('pre');[...tf.children].forEach((c,i)=>c.style.transitionDelay=(i*.15)+'s');requestAnimationFrame(()=>requestAnimationFrame(()=>tf.classList.remove('pre')))};
+
+/* ---------- team ---------- */
+const ROLES=[
+ ['Governance','Programme governance and overall delivery','SAP IS-Oil functional ownership'],
+ ['Assessment','Bluefield technical work and technical conversion, subject to confirmed scope','IS-Oil process and configuration assessment'],
+ ['Data','Data migration execution','IS-Oil data mapping and functional validation'],
+ ['Development','Technical development, ABAP and reporting','Functional specifications for IS-Oil-related custom objects'],
+ ['Integration','Integration technical build','Cross-application functional scope needing IS-Oil expertise, including relevant MM/SD processes'],
+ ['Testing','Testing, training and change management','IS-Oil functional testing and validation'],
+ ['Environments','Supplier-side environment management outside SAP’s explicitly contracted PTO services','Functional inputs and validation for IS-Oil-related environment and integration requirements']];
+$('#roles').innerHTML=ROLES.map(([a,w,k])=>`<div class="rrow" data-a="${a}"><div class="area">${a}</div><div class="c w">${w}</div><div class="c k">${k}</div></div>`).join('');
+const rf=$('#rolef');['All',...ROLES.map(r=>r[0])].forEach((a,i)=>{const b=document.createElement('button');b.className='chip'+(i?'':' on');b.textContent=a;b.onclick=()=>{$$('.chip',rf).forEach(x=>x.classList.toggle('on',x===b));$$('.rrow').forEach(r=>r.classList.toggle('dim',a!=='All'&&r.dataset.a!==a))};rf.appendChild(b)});
+
+/* ---------- plan ---------- */
+const MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],MONTHS=[];for(let i=0;i<20;i++)MONTHS.push(MN[i%12]+' '+(27+Math.floor(i/12)));
+const ENVS=[
+ {n:'SBX',s:0,e:0,when:'January 2027',p:'Explore, demonstrations, prototypes and Fit-to-Standard'},
+ {n:'DEV',s:1,e:2,when:'February–March 2027',p:'Core model configuration, developments, extensions, unit tests and mocks'},
+ {n:'INT',s:3,e:5,when:'Q2 2027',p:'Interfaces, chained processing, handling of rejections and replays, first end-to-end evidence'},
+ {n:'QA',s:6,e:8,when:'Q3 2027',p:'Stable business acceptance testing, business E2E tests, non-regression and preparation of acceptance'},
+ {n:'MIG',s:6,e:11,when:'H2 2027',p:'Load rehearsals, reconciliation, rollback and measurement of cutover duration'},
+ {n:'TRN',s:11,e:11,when:'End of 2027',p:'Training of trainers and users with reproducible training datasets'},
+ {n:'PRD',s:12,e:12,pt:1,when:'Before January 2028',p:'Pilot, stabilisation and Hypercare'}];
+const PH=[
+ {id:'mob',ph:'Prepare',t:'Mobilise',k:'prep',lane:0,s:1,e:1,envs:['SBX'],act:['Resource mobilisation','GPO alignment','Planning and environment coordination']},
+ {id:'exp',ph:'Explore',t:'Explore: fit-to-standard templates',k:'exp',lane:1,s:2,e:5,envs:['SBX','DEV'],act:['Formal Explore: current-state assessment','Fit-to-Standard','Selective transition assessment','Global solution design']},
+ {id:'build',ph:'Realize',t:'Config and Build: Template',k:'real',lane:2,s:5,e:8,envs:['DEV'],act:['Progressive Build for approved and stable design areas, subject to DEV readiness']},
+ {id:'test',ph:'Realize',t:'Test ×3: Playback and Signoff',k:'test',lane:3,s:8,e:11,envs:['INT','QA','MIG','TRN'],act:['Integration and business testing: preparation and execution','Migration rehearsals','Training and cutover preparation']},
+ {id:'pilot',ph:'Realize',t:'Pilot A/B: Localization',k:'real',lane:4,s:12,e:14,envs:['PRD'],act:['Pilot localisation of the Core Model'],tbc:'Which pilots A and B cover is to be agreed together.'},
+ {id:'ptest',ph:'Realize',t:'Test',k:'test',lane:4,s:15,e:16,envs:['PRD'],act:['Pilot testing ahead of cutover']},
+ {id:'cut',ph:'Deploy',t:'Cutover',k:'dep',lane:5,s:17,e:17,envs:['PRD'],act:['Pilot cutover and go-live (H1 2028 target)']},
+ {id:'hyp',ph:'Hypercare',t:'Hypercare, rollout kit & lessons learned',k:'hyp',lane:6,s:18,e:19,envs:['PRD'],act:['Hypercare','Rollout kit and lessons learned','Move2Run']}];
+const LANES=[['Prepare',''],['Explore',''],['Realize','Build'],['Realize','Test'],['Realize','Pilot'],['Deploy',''],['Hypercare','']];
+const pct=m=>m/20*100;
+let gh=`<div class="grow ghead"><div class="lab">Phase</div><div class="lane">${MONTHS.map((m,i)=>`<span class="${i%12===0?'y':''}">${m}</span>`).join('')}</div></div>`;
+gh+=`<div class="grow envrow"><div class="lab">Environments<small>RFP target availability</small></div><div class="lane"><div class="cols">${'<i></i>'.repeat(20)}</div>${ENVS.map((v,i)=>v.pt?`<span class="env pt" style="left:${pct(v.s)}%;top:${10+i*18}px" title="${v.n} · ${v.when}: ${v.p}"></span><span class="envlab" style="left:calc(${pct(v.s)}% + 12px);top:${8+i*18}px">${v.n} · ${v.when}</span>`:`<span class="env" style="left:${pct(v.s)}%;width:calc(${pct(v.e-v.s+1)}% - 4px);top:${10+i*18}px" title="${v.n} · ${v.when}: ${v.p}">${v.n}</span>${v.e-v.s<2?`<span class="envlab" style="left:calc(${pct(v.e+1)}% + 4px);top:${9+i*18}px">${v.when}</span>`:''}`).join('')}</div></div>`;
+LANES.forEach(([a,b],li)=>{gh+=`<div class="grow"><div class="lab">${a}${b?`<small>${b}</small>`:''}</div><div class="lane"><div class="cols">${'<i></i>'.repeat(20)}</div>${PH.map((p,i)=>p.lane!==li?'':`<button class="bar k-${p.k}" data-i="${i}" style="left:calc(${pct(p.s)}% + 2px);width:calc(${pct(p.e-p.s+1)}% - 4px)" title="${p.t}">${p.e===p.s?'':p.t}</button>${p.e===p.s&&p.id!=='cut'?`<span class="blab" style="left:calc(${pct(p.e+1)}% + 6px)">${p.t}</span>`:''}`).join('')}</div></div>`});
+gh+=`<div class="playhead" id="ph"></div>`;
+const gantt=$('#gantt');gantt.innerHTML=gh;
+// go-live marker
+const lastLane=$$('.grow',gantt);const gl=document.createElement('div');gl.className='ms';gl.id='gGolive';gl.innerHTML='<b>◆ Cutover → pilot go-live · H1 2028</b>';
+const cutLane=$$('.grow .lane',gantt)[2+5];cutLane.appendChild(gl);gl.style.left=`calc(${pct(18)}% - 1px)`;
+$$('.bar',gantt).forEach(b=>b.onclick=()=>openPhase(+b.dataset.i));
+// drawer
+let drawerOpen=false,curPhase=0;const dr=$('#drawer');
+function openPhase(i){i=(i+PH.length)%PH.length;curPhase=i;drawerOpen=true;const p=PH[i];
+  $('#dPh').textContent=p.ph;$('#dT').textContent=p.t;$('#dW').textContent=p.s===p.e?MONTHS[p.s]:`${MONTHS[p.s]} – ${MONTHS[p.e]}`;
+  const env=ENVS.filter(v=>p.envs.includes(v.n));
+  $('#dB').innerHTML=`<h5>Proposed activities</h5><ul>${p.act.map(a=>`<li>${a}</li>`).join('')}</ul><h5>Environments in play</h5><ul>${env.map(v=>`<li><b class="mono" style="color:var(--acc)">${v.n}</b> · ${v.when}<br>${v.p}</li>`).join('')}</ul>${p.tbc?`<h5>To be agreed together</h5><ul><li>${p.tbc}</li></ul>`:''}`;
+  dr.classList.add('open');dr.setAttribute('aria-hidden','false');$$('.bar',gantt).forEach(b=>b.classList.toggle('sel',+b.dataset.i===i))}
+function closeDrawer(){drawerOpen=false;dr.classList.remove('open');dr.setAttribute('aria-hidden','true');$$('.bar').forEach(b=>b.classList.remove('sel'))}
+$('#dX').onclick=closeDrawer;$('#dPrev').onclick=()=>openPhase(curPhase-1);$('#dNext').onclick=()=>openPhase(curPhase+1);
+// play
+let pT=0,pm=0;const ph=$('#ph');
+function placePH(m){const lane=$('.ghead .lane',gantt),gr=gantt.getBoundingClientRect(),lr=lane.getBoundingClientRect();ph.style.left=(lr.left-gr.left+lr.width*m/20)+'px'}
+function stopPlan(){cancelAnimationFrame(pT);pT=0;gantt.classList.remove('playing');$('#gPlay').textContent='▶ Play the plan';$$('.bar',gantt).forEach(b=>b.classList.remove('lit','now'));$('#gCap').textContent='Prepare → Explore → Realize → Deploy → Hypercare'}
+function togglePlan(){if(pT){stopPlan();return}closeDrawer();if(RM){openPhase(0);return}gantt.classList.add('playing');$('#gPlay').textContent='❚❚ Stop';let t0=0;const DUR=16000;
+  const tick=t=>{if(!t0)t0=t;pm=Math.min(20,(t-t0)/DUR*20);placePH(pm);const mi=Math.min(19,Math.floor(pm));
+    const act=PH.filter(p=>mi>=p.s&&mi<=p.e);$$('.bar',gantt).forEach(b=>{const p=PH[+b.dataset.i];b.classList.toggle('lit',pm>=p.s);b.classList.toggle('now',mi>=p.s&&mi<=p.e)});
+    const env=ENVS.filter(v=>mi>=v.s&&mi<=v.e).map(v=>v.n);
+    $('#gCap').innerHTML=`<b>${MONTHS[mi]}</b> · ${act.map(p=>p.t).join(' + ')||'—'}${env.length?` · env: ${env.join(', ')}`:''}`;
+    if(pm<20)pT=requestAnimationFrame(tick);else{pT=0;$('#gPlay').textContent='↻ Replay';gantt.classList.remove('playing');$$('.bar',gantt).forEach(b=>b.classList.remove('now'));$('#gCap').innerHTML='<b>Aug 28</b> · Pilot live since H1 2028, hypercare complete, Move2Run'}};
+  pT=requestAnimationFrame(tick)}
+$('#gPlay').onclick=togglePlan;
+// tabs
+$$('[data-pt]').forEach(b=>b.onclick=()=>{$$('[data-pt]').forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-selected',x===b)});$('#pt-gantt').hidden=b.dataset.pt!=='gantt';$('#pt-sheet').hidden=b.dataset.pt!=='sheet';stopPlan();closeDrawer()});
+// sheet
+const SH=[
+ {m:'Jan 2027',env:['SBX'],p:'Explore, demonstrations, prototypes and Fit-to-Standard',a:['—'],ph:null},
+ {m:'Feb 2027',env:[],p:'',a:['Resource mobilisation, GPO alignment, planning and environment coordination'],ph:0},
+ {m:'Mar – Jun 2027',env:['DEV'],p:'DEV (Feb–Mar 2027): core model configuration, developments, extensions, unit tests and mocks',a:['Formal Explore: current-state assessment, Fit-to-Standard, selective transition assessment and global solution design'],ph:1},
+ {m:'Jun – Sep 2027',env:[],p:'',a:['Progressive Build for approved and stable design areas, subject to DEV readiness'],ph:2},
+ {m:'Sep – Dec 2027',env:['INT','QA','MIG','TRN'],p:'INT (Q2 2027): interfaces, chained processing, rejections and replays, first E2E evidence · QA (Q3 2027): stable business acceptance, E2E tests, non-regression · MIG (H2 2027): load rehearsals, reconciliation, rollback, cutover timing · TRN (end 2027): training of trainers and users',a:['Integration and business testing preparation and execution','Migration rehearsals, training and cutover preparation'],ph:3},
+ {m:'Jan – Aug 2028',env:['PRD'],p:'Production (before January 2028): pilot, stabilisation, Hypercare; later deployments outside this contract',a:['Pilot Go-Live, Hypercare and Move2Run'],ph:6}];
+$('#sheet tbody').innerHTML=SH.map((r,i)=>`<tr data-i="${i}" data-env="${r.env.join(' ')}"><td>${r.m}</td><td class="envs">${r.env.map(e=>`<span>${e}</span>`).join('')||'<span style="border-color:var(--line2);color:var(--faint)">—</span>'}</td><td>${r.p||'—'}</td><td><ul>${r.a.map(x=>`<li>${x}</li>`).join('')}</ul></td></tr>`).join('');
+$$('#sheet tbody tr').forEach(tr=>tr.onclick=()=>{const r=SH[+tr.dataset.i];if(r.ph==null)return;$('[data-pt="gantt"]').click();openPhase(r.ph)});
+const ef=$('#envf');['All','SBX','DEV','INT','QA','MIG','TRN','PRD'].forEach((e,i)=>{const b=document.createElement('button');b.className='chip'+(i?'':' on');b.textContent=e;b.onclick=()=>{$$('.chip',ef).forEach(x=>x.classList.toggle('on',x===b));$$('#sheet tbody tr').forEach(tr=>tr.classList.toggle('hid',e!=='All'&&!tr.dataset.env.split(' ').includes(e)))};ef.appendChild(b)});
+enter.plan=()=>{};
+
+
+/* ---------- commercials ---------- */
+const HPD=9,BASE={on:30,off:30};
+const SRC={c:{name:'Commodities',on:{mm:262,h:51876,v:7955200},off:{mm:202,h:39996,v:2214256},w:{on:[65,12870],off:[300,59400]},cost:{mp:5835520,del:153836,cola:301176}},
+           d:{name:'Customer Products',on:{mm:22,h:4356,v:658240},off:{mm:131,h:25938,v:1286736},w:{on:[306,48960],off:[318,50880]},cost:{mp:757920,del:103370,cola:37836}}};
+let gm={...BASE};
+function calc(g){const R={c:{},d:{}};
+  ['on','off'].forEach(k=>{const s=SRC.c[k],p=s.v/(1-g[k]/100);R.c[k]={...s,p,gm:g[k],r:p/s.h}});
+  ['on','off'].forEach(k=>{const s=SRC.d[k],r=R.c[k].r,p=s.h*r;R.d[k]={...s,p,r,gm:(1-s.v/p)*100}});
+  ['c','d'].forEach(x=>{const a=R[x],S=SRC[x];a.tot={mm:a.on.mm+a.off.mm,h:a.on.h+a.off.h,v:a.on.v+a.off.v,p:a.on.p+a.off.p};a.tot.gm=(1-a.tot.v/a.tot.p)*100;a.tot.r=a.tot.p/a.tot.h;
+    a.w={mm:S.w.on[0]+S.w.off[0],h:S.w.on[1]+S.w.off[1]};a.split=a.tot.mm/(a.tot.mm+a.w.mm)*100;
+    a.dc=S.cost.mp+S.cost.del+S.cost.cola;a.igm=(1-a.dc/a.tot.p)*100;a.buf=a.tot.h-a.tot.mm*22*8});
+  R.all=R.c.tot.p+R.d.tot.p;return R}
+const BR=calc(BASE);
+const $f=v=>'$'+Math.round(v).toLocaleString('en-US'),nf=v=>Math.round(v).toLocaleString('en-US'),pf=(v,d=1)=>v.toFixed(d)+'%';
+const get=(o,p)=>p.split('.').reduce((a,k)=>a[k],o);
+function ctable(x){const S=SRC[x],ed=x==='c',f=(p,fmt)=>`<span data-f="${x}.${p}" data-t="${fmt}"></span>`;
+  const row=(k,first)=>`<tr>${first?`<td rowspan="2" class="c">${f('split','pc0')}</td><td rowspan="2" class="c"><b>KaarTech / Velnox</b></td>`:''}<td class="c">${k==='on'?'Onsite':'Offshore'}</td><td>${nf(S[k].mm)}</td><td>${nf(S[k].h)}</td><td>${$f(S[k].v)}</td>
+   ${ed?`<td class="ed c"><input class="gmin" type="number" min="0" max="80" step="0.5" data-gm="${k}" aria-label="${k==='on'?'Onsite':'Offshore'} KT GM%">%</td>`:`<td class="dr c" title="Derived: Customer Products hours × Commodities blended rate">${f(k+'.gm','pc1')}</td>`}
+   <td>${f(k+'.p','usd')}</td><td>${f(k+'.r','usd')}</td><td>${f(k+'.rd','usd')}</td></tr>`;
+  const wrow=(k,first)=>`<tr>${first?`<td rowspan="2" class="c">${f('wsplit','pc0')}</td><td rowspan="2" class="c"><b>Wipro</b></td>`:''}<td class="c">${k==='on'?'Onsite':'Offshore'}</td><td>${nf(S.w[k][0])}</td><td>${nf(S.w[k][1])}</td><td class="na" colspan="5">N/A</td></tr>`;
+  return `<div class="card gwrap" style="padding:18px"><table class="ctbl"><caption>${S.name}${ed?' · edit the shaded KT GM% cells':' · priced at the Commodities blended rates'}</caption>
+   <thead><tr><th>Scope split %</th><th>Party</th><th>Location</th><th>Man Months</th><th>Man Hours</th><th class="vp">Velnox Price</th><th>KT GM%</th><th>KT Price</th><th>Blended Rate/Hr</th><th>Blended Rate/Day</th></tr></thead>
+   <tbody>${row('on',1)}${row('off',0)}
+   <tr class="sub"><td class="l" colspan="3">KaarTech / Velnox total</td><td>${f('tot.mm','n')}</td><td>${f('tot.h','n')}</td><td>${f('tot.v','usd')}</td><td class="c">${f('tot.gm','pc1')}</td><td>${f('tot.p','usd')}</td><td>${f('tot.r','usd')}</td><td>${f('tot.rd','usd')}</td></tr>
+   ${wrow('on',1)}${wrow('off',0)}
+   <tr class="sub"><td class="l" colspan="3">Wipro total</td><td>${f('w.mm','n')}</td><td>${f('w.h','n')}</td><td colspan="5"></td></tr></tbody></table>
+   <div class="splitbar"><div class="k" data-sw="${x}">KaarTech / Velnox</div><div class="w" style="flex:1">Wipro</div></div><span class="mono muted" style="font-size:11px">Scope split by man-months</span></div>
+   <div class="card gwrap" style="padding:18px;margin-top:14px"><table class="ctbl" style="min-width:760px"><caption>As per our KT internal costing</caption><thead><tr><th>Manpower Cost</th><th>Delivery Cost</th><th>YoY Price Escalation (COLA)</th><th>Total Direct Cost</th><th>GM%</th><th>Total KT Price</th><th>Blended Rate/Hour</th></tr></thead>
+   <tbody><tr><td>${$f(S.cost.mp)}</td><td>${$f(S.cost.del)}</td><td>${$f(S.cost.cola)}</td><td>${f('dc','usd')}</td><td class="c dr">${f('igm','pc2')}</td><td>${f('tot.p','usd')}</td><td>${f('tot.r','usd')}</td></tr></tbody></table></div>`}
+$('#ct-c').innerHTML=ctable('c');$('#ct-d').innerHTML=ctable('d');
+$('#ckpis').innerHTML=[['Commodities · KT price','c.tot.p','usd',1],['Commodities · internal GM','c.igm','pc2'],['Customer Products · KT price','d.tot.p','usd',1],['Customer Products · internal GM','d.igm','pc2'],['Firm + optional · KT price','all','usd',1]]
+  .map(([l,p,t,h])=>`<div class="ck${h?' hl':''}"><span class="tm">${l}</span><b data-f="${p}" data-t="${t}"></b><span class="dl" data-dl="${p}" data-t="${t}"></span></div>`).join('');
+let R=BR;
+function fmt(v,t){return t==='usd'?$f(v):t==='n'?nf(v):t==='pc0'?pf(v,0):t==='pc2'?pf(v,2):pf(v,1)}
+function val(p){if(p.endsWith('.rd'))return get(R,p.slice(0,-3)+'.r')*HPD;if(p.endsWith('.wsplit'))return 100-get(R,p.replace('wsplit','split'));return get(R,p)}
+function update(flash){R=calc(gm);
+  $$('[data-f]').forEach(e=>{const t=fmt(val(e.dataset.f),e.dataset.t);if(e.textContent!==t){e.textContent=t;if(flash){const c=e.closest('td')||e;c.classList.remove('fl');void c.offsetWidth;c.classList.add('fl')}}});
+  $$('[data-dl]').forEach(e=>{const p=e.dataset.dl,d=get(R,p)-get(BR,p);e.className='dl'+(Math.abs(d)<.005?'':d>0?' up':' dn');e.textContent=Math.abs(d)<.005?'at base (30% / 30%)':(d>0?'▲ ':'▼ ')+(e.dataset.t==='usd'?$f(Math.abs(d)):Math.abs(d).toFixed(2)+' pts')+' vs base'});
+  $$('[data-sw]').forEach(e=>{const v=R[e.dataset.sw].split;e.style.width=v+'%';e.textContent='KaarTech / Velnox '+v.toFixed(0)+'%'});
+  $$('[data-gm]').forEach(i=>{if(document.activeElement!==i)i.value=gm[i.dataset.gm]});
+  [['gmOn','on'],['gmOff','off']].forEach(([id,k])=>{if(document.activeElement!==$('#'+id))$('#'+id).value=gm[k];$('#'+id+'R').value=gm[k]});
+  $('#bufC').textContent='~'+nf(Math.round(R.c.buf/100)*100);$('#bufD').textContent='~'+nf(Math.round(R.d.buf/100)*100);
+  $('#nGmC').textContent=pf(R.c.igm,2);$('#nGmD').textContent=pf(R.d.igm,2)}
+function setGm(k,v){v=parseFloat(v);if(isNaN(v))return;gm[k]=Math.max(0,Math.min(80,v));update(true)}
+document.addEventListener('input',e=>{const t=e.target;if(t.dataset.gm)setGm(t.dataset.gm,t.value);else if(t.id==='gmOn'||t.id==='gmOnR')setGm('on',t.value);else if(t.id==='gmOff'||t.id==='gmOffR')setGm('off',t.value)});
+$('#gmReset').onclick=()=>{gm={...BASE};update(true)};
+$$('[data-ct]').forEach(b=>b.onclick=()=>{$$('[data-ct]').forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-selected',x===b)});$('#ct-c').hidden=b.dataset.ct!=='c';$('#ct-d').hidden=b.dataset.ct!=='d'});
+update(false);
+enter.commercials=()=>{};
+
+/* ---------- decision ---------- */
+const DP=[['A significant entry point','Into TotalEnergies’ Refining & Chemicals SAP transformation, with potential relevance to the wider programme through 2030.'],
+ ['Our role is confirmed','Wipro has confirmed to TotalEnergies that KaarTech participates as the SAP IS-Oil specialist.'],
+ ['Resources are confirmed','Velnox has confirmed the availability of the required IS-Oil functional leadership and delivery resources.'],
+ ['Boundaries are agreed','The proposed scope boundary and the Wipro–KaarTech responsibility split are agreed.']];
+$('#dpts').innerHTML=DP.map(([t,d],i)=>`<div class="dpt"><span class="n">0${i+1}</span><h4>${t}</h4><p>${d}</p></div>`).join('');
+$('#prot').innerHTML=['KaarTech’s responsibility is restricted to the explicitly agreed SAP IS-Oil functional scope, deliverables and activities.','Additional modules, processes, countries, pilots, technical activities or responsibilities must be separately assessed and mutually agreed.','KaarTech should not be held accountable for delays or failures caused by Wipro, TotalEnergies, SAP, other suppliers or dependencies outside its control.'].map(x=>`<li>${x}</li>`).join('');
+const ASKS=[['Go ahead with the bid','Participate in the MARTY programme as the SAP IS-Oil specialist partner under Wipro.'],
+ ['Approve the Firm scope price','Commodities at <b data-f="c.tot.p" data-t="usd"></b>, <b data-f="c.igm" data-t="pc2"></b> internal GM, blended <b data-f="c.tot.r" data-t="usd"></b>/hr.'],
+ ['Approve the Optional scope price','Customer Products at <b data-f="d.tot.p" data-t="usd"></b>, <b data-f="d.igm" data-t="pc2"></b> internal GM, if TotalEnergies exercises it.'],
+ ['Confirm the scope boundary','The Wipro–KaarTech responsibility split, with the protections above.']];
+const ast=ASKS.map(()=>0);
+$('#asks').innerHTML=ASKS.map(([t,d],i)=>`<div class="ask" data-i="${i}"><span class="n">0${i+1}</span><div><h4>${t}</h4><p>${d}</p></div><div class="bt"><button class="y" aria-pressed="false">✓ Approve</button><button class="q" aria-pressed="false">? Discuss</button></div></div>`).join('');
+function asum(){const a=ast.filter(x=>x===1).length,q=ast.filter(x=>x===2).length,o=ast.length-a-q;
+  $('#asum').innerHTML=a===ast.length?'<b>All four approved.</b> Next: confirm with Wipro and lock the KaarTech pricing.':`<b>${a}</b> approved · <b>${q}</b> to discuss · <b>${o}</b> open`}
+$$('.ask').forEach(el=>{const i=+el.dataset.i;$$('.bt button',el).forEach(b=>b.onclick=()=>{const v=b.classList.contains('y')?1:2;ast[i]=ast[i]===v?0:v;el.classList.toggle('ok',ast[i]===1);el.classList.toggle('dis',ast[i]===2);$('.y',el).setAttribute('aria-pressed',ast[i]===1);$('.q',el).setAttribute('aria-pressed',ast[i]===2);asum()})});
+asum();update(false);
+enter.next=()=>{const d=$('#dpts');d.classList.remove('in');requestAnimationFrame(()=>requestAnimationFrame(()=>d.classList.add('in')))};
+
+/* ---------- init ---------- */
+try{const t=localStorage.getItem('te-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}
+setTheme(document.documentElement.dataset.theme);
+layout();start();
+go((location.hash||'#home').slice(1),false);
+addEventListener('hashchange',()=>{const v=location.hash.slice(1);if(v!==cur)go(v,false)});
+if(document.fonts)document.fonts.ready.then(()=>{if(RM)draw(0)});
+})();
+</script>
+</body>
+</html>
